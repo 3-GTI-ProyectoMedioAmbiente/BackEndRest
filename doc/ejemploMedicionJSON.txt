@@ -1,25 +1,20 @@
 {
-  "mediciones": [
-    {
-      "datos": 25545.25,
-      "fecha": "05/10/2021",
-      "hora":"15:00",
-      "localizacion": {
-        "lat": 17.1,
-        "lon": 15.2
-      },
-    "id": "1"
-    },
-    {
-      "datos": 58.25,
-      "fecha": "5/10/2021",
-      "hora": "16:00",
-      "localizacion": {
-        "lat": 17.1,
-        "lon": 15.2
-      },
-    "id": "5"
-    }
-  ]
-  
+ "mediciones": [
+ {
+ "medicion": 25545.25,
+ "fecha": "2021/10/16",
+ "hora":"15:00",
+ "localizacion_lat": 17.1,
+ "localizacion_lon": 15.2,
+ "id": 1
+ },
+ {
+ "medicion": 58.25,
+ "fecha": "2021/10/16",
+ "hora": "16:00",
+ "localizacion_lat": 17.1,
+ "localizacion_lon": 15.2,
+ "id": 5
+ }
+ ]
 }

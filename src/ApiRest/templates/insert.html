@@ -1,0 +1,33 @@
+<form action="/add_medicion" method="POST">
+    <input type="text" name="medicion" placeholder="Medicion">
+    <button type="submit">
+        Guardar
+    </button>
+    <table>
+        <thead>
+            <tr>
+                <td>Id:</td>
+                <td>Medicion:</td>
+                <td>Fecha:</td>
+                <td>Hora:</td>
+                <td>Latitud:</td>
+                <td>Longitud</td>
+            </tr>
+        </thead>
+        <tbody>
+            {% for medicion in mediciones %}
+            <tr>
+                <td>{{medicion.0}}</td>
+                <td>{{medicion.1}}</td>
+                <td>{{medicion.2}}</td>
+                <td>{{medicion.3}}</td>
+                <td>{{medicion.4}}</td>
+                <td>{{medicion.5}}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <button type="reset">
+        Actualizar datos
+    </button>
+</form>
