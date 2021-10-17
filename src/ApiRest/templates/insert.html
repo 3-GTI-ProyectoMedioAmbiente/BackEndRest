@@ -1,9 +1,12 @@
-<form action="/getLastMeasuresWeb" method="POST">
+{% extends 'layout.html'%}
+{% block body %}
+
+<form action="/getLastMeasuresWeb" method="POST" class="form-group">
     <input type="text" name="cuantos" placeholder="Últimas mediciones...">
     <button type="submit">
         Últimas mediciones
     </button>
-    <table>
+    <table class="table">
         <thead>
             <tr>
                 <td>Id:</td>
@@ -31,3 +34,5 @@
         Ver todas las mediciones
     </button>
 </form>
+
+{% endblock %}

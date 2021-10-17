@@ -21,7 +21,8 @@ def ultimas_mediciones_web():
     if request.method == 'POST':
         cuantos = request.form['cuantos']
         if cuantos:
-            data = logicaNegocio.getUltimasMediciones(cuantos)
+            dataJson = logicaNegocio.getUltimasMediciones(cuantos)
+            data = dataJson['mediciones']
             return render_template('insert.html', mediciones=data)
         else:
             return redirect(url_for('getAllMeasuresWeb'))
