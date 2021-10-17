@@ -1,7 +1,7 @@
-<form action="/add_medicion" method="POST">
-    <input type="text" name="medicion" placeholder="Medicion">
+<form action="/getLastMeasuresWeb" method="POST">
+    <input type="text" name="cuantos" placeholder="Últimas mediciones...">
     <button type="submit">
-        Guardar
+        Últimas mediciones
     </button>
     <table>
         <thead>
@@ -17,17 +17,17 @@
         <tbody>
             {% for medicion in mediciones %}
             <tr>
-                <td>{{medicion.0}}</td>
-                <td>{{medicion.1}}</td>
-                <td>{{medicion.2}}</td>
-                <td>{{medicion.3}}</td>
-                <td>{{medicion.4}}</td>
-                <td>{{medicion.5}}</td>
+                <td>{{medicion['id']}}</td>
+                <td>{{medicion['medicion']}}</td>
+                <td>{{medicion['fecha']}}</td>
+                <td>{{medicion['hora']}}</td>
+                <td>{{medicion['localizacion_lat']}}</td>
+                <td>{{medicion['localizacion_lon']}}</td>
             </tr>
             {% endfor %}
         </tbody>
     </table>
-    <button type="reset">
-        Actualizar datos
+    <button type="submit">
+        Ver todas las mediciones
     </button>
 </form>

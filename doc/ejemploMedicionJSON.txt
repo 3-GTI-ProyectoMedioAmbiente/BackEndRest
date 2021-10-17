@@ -1,20 +1,21 @@
 {
  "mediciones": [
  {
+ "id": 1
  "medicion": 25545.25,
  "fecha": "2021/10/16",
  "hora":"15:00",
  "localizacion_lat": 17.1,
  "localizacion_lon": 15.2,
- "id": 1
+
  },
  {
+ "id": 5
  "medicion": 58.25,
  "fecha": "2021/10/16",
  "hora": "16:00",
  "localizacion_lat": 17.1,
  "localizacion_lon": 15.2,
- "id": 5
  }
  ]
 }
