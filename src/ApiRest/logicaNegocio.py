@@ -1,10 +1,15 @@
 from db import Database
 from model.ModelMedicion import Medicion
+#-----------------------------------------------------------------------------------
+# @author: Juan Carlos Hernandez Ramirez
+#Fecha: 14/10/2021
+#-----------------------------------------------------------------------------------
+
 class LogicaNegocio:
     def __init__(self, app):
         self.db = Database(app)
-    
-    #Devuelve 1 si ha conseguido insetar todas las mediciones, -1 en caso contrario
+    ## Metodo que preapra la sentencia SQL para insertarla en la BD
+    ## Devuelve 1 si ha conseguido insetar todas las mediciones, -1 en caso contrario
     def insertMediciones(self,mediciones):
         resContador = 0
         for medicion in mediciones:
@@ -18,7 +23,6 @@ class LogicaNegocio:
             res = 1
         return res
 
-
     def getTodasLasMediciones(self):
         data = self.db.queryStatemen("Select * from mediciones")
         return self.devolverMediciones(data)  
@@ -27,7 +31,7 @@ class LogicaNegocio:
         data = self.db.queryStatemen("SELECT * FROM mediciones ORDER BY id DESC LIMIT {}".format(cuantos))
         return self.devolverMediciones(data)
     
-    #Crea los objetos Medicion y los prepara para ser enviados en formato JSON
+    #Crea los objetos Medicion y los prepara para ser enviados en formato JSON, segun el resultado obtenido en las consultas a la BD
     def devolverMediciones(self,data):
         res = {}
         res['mediciones'] = []

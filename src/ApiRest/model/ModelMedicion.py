@@ -1,4 +1,9 @@
 import json
+#-----------------------------------------------------------------------------------
+# @author: Juan Carlos Hernandez Ramirez
+#Fecha: 14/10/2021
+#-----------------------------------------------------------------------------------
+
 class Medicion:
     def __init__(self,id, medicion, fecha, hora, localizacion_lat, localizacion_lon):
         self.id = id
@@ -8,7 +13,7 @@ class Medicion:
         self.localizacion_lat = localizacion_lat
         self.localizacion_lon = localizacion_lon
 
-
+## Convierte la clase Medicion en JSON (string)
     def toJson(self):
         json = {
             "id": self.id,
