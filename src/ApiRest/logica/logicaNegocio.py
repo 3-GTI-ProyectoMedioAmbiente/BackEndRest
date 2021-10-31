@@ -1,4 +1,4 @@
-from db import Database
+from logica.db import Database
 from model.ModelMedicion import Medicion
 #-----------------------------------------------------------------------------------
 # @author: Juan Carlos Hernandez Ramirez

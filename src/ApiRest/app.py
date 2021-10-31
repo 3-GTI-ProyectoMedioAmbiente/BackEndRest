@@ -1,6 +1,7 @@
-from flask import Flask, render_template, request,redirect,url_for
-from logicaNegocio import LogicaNegocio
+from flask import Flask,request
+from logica.logicaNegocio import LogicaNegocio
 import json
+
 
 #-----------------------------------------------------------------------------------
 # @author: Juan Carlos Hernandez Ramirez
@@ -14,38 +15,7 @@ app.config['MYSQL_USER']='root'
 app.config['MYSQL_PASSWORD']=''
 app.config['MYSQL_DB']='db_mediciones'
 
-logicaNegocio = LogicaNegocio(app) 
-
-##/
-## http://{ip_server}/
-## Ruta principal de la pagina web que mostrara todas las mediciones
-## @return plantillaWeb: genera el codigo html de la pagina web a partir de las medidicones obtenidas en la BD 
-## getAllMeasuresWeb-> HTML
-##/
-@app.route('/')
-def getAllMeasuresWeb():
-    dataJson = logicaNegocio.obtenerTodasLasMediciones()
-    data = dataJson['mediciones']
-    return render_template('insert.html', mediciones=data)
-
-##/
-## http://{ip_server}/getLastMeasuresWeb
-## Ruta principal de la pagina web que mostrara todas las mediciones
-## @return plantillaWeb: genera el codigo html de la pagina web a partir de las medidicones obtenidas en la BD 
-## getAllMeasuresWeb-> HTML
-##/
-@app.route('/getLastMeasuresWeb',methods=['POST'])
-def ultimas_mediciones_web():
-    if request.method == 'POST':
-        cuantos = request.form['cuantos']
-        if cuantos:
-            dataJson = logicaNegocio.obtenerLasUltimasMediciones(cuantos)
-            data = dataJson['mediciones']
-            return render_template('insert.html', mediciones=data)
-        else:
-            return redirect(url_for('getAllMeasuresWeb'))
-
-#------------ Metodos API REST ----------
+logicaNegocio = LogicaNegocio(app)
 
 ##/
 ## http://{ip_server}/insertMedicionJson
@@ -65,8 +35,8 @@ def insertMedicionJson():
 ## @return json: JSON que contendra todas las mediciones 
 ## getAllMeasures-> [Medicion]
 ##/
-@app.route('/getAllMeasures')
-def getAllMeasures():
+@app.route('/obtenerTodasLasMediciones')
+def obtenerTodasLasMediciones():
     data = logicaNegocio.obtenerTodasLasMediciones()
     return json.dumps(data, indent=4)
 
@@ -76,8 +46,8 @@ def getAllMeasures():
 ## @return json: JSON que contendra las ultimas mediciones 
 ## getLastMeasures-> [Medicion]
 ##/
-@app.route('/getLastMeasures')
-def getLastMeasures():
+@app.route('/obtenerLasUltimasMediciones')
+def obtenerLasUltimasMediciones():
     cuantos = request.args.get('cuantos')
     data = logicaNegocio.obtenerLasUltimasMediciones(cuantos)
     return json.dumps(data,indent=4)
