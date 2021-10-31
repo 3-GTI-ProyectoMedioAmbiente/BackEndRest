@@ -6,6 +6,8 @@ import json
 # @author: Juan Carlos Hernandez Ramirez
 #Fecha: 14/10/2021
 #-----------------------------------------------------------------------------------
+
+#Configuracion de la BD
 app = Flask(__name__)
 app.config['MYSQL_HOST']='localhost'
 app.config['MYSQL_USER']='root'
@@ -14,20 +16,30 @@ app.config['MYSQL_DB']='db_mediciones'
 
 logicaNegocio = LogicaNegocio(app) 
 
-## Peticion para gestionar el muestreo de todas las mediciones en la web
+##/
+## http://{ip_server}/
+## Ruta principal de la pagina web que mostrara todas las mediciones
+## @return plantillaWeb: genera el codigo html de la pagina web a partir de las medidicones obtenidas en la BD 
+## getAllMeasuresWeb-> HTML
+##/
 @app.route('/')
 def getAllMeasuresWeb():
-    dataJson = logicaNegocio.getTodasLasMediciones()
+    dataJson = logicaNegocio.obtenerTodasLasMediciones()
     data = dataJson['mediciones']
     return render_template('insert.html', mediciones=data)
 
-## Peticion para gestionar el muestreo de las ultimas mediciones en la web
+##/
+## http://{ip_server}/getLastMeasuresWeb
+## Ruta principal de la pagina web que mostrara todas las mediciones
+## @return plantillaWeb: genera el codigo html de la pagina web a partir de las medidicones obtenidas en la BD 
+## getAllMeasuresWeb-> HTML
+##/
 @app.route('/getLastMeasuresWeb',methods=['POST'])
 def ultimas_mediciones_web():
     if request.method == 'POST':
         cuantos = request.form['cuantos']
         if cuantos:
-            dataJson = logicaNegocio.getUltimasMediciones(cuantos)
+            dataJson = logicaNegocio.obtenerLasUltimasMediciones(cuantos)
             data = dataJson['mediciones']
             return render_template('insert.html', mediciones=data)
         else:
@@ -35,24 +47,39 @@ def ultimas_mediciones_web():
 
 #------------ Metodos API REST ----------
 
+##/
+## http://{ip_server}/insertMedicionJson
 ## Peticion que controla la insercion de datos mediante JSON
+## @return HTML: html que contiene el resultado obtenido en la insercion exito=1, fallo=-1
+## Medicion->insertMedicionJson-> HTML
+##/
 @app.route('/insertMedicionJson', methods=['POST'])
 def insertMedicionJson():
     data=request.get_json()
-    res = logicaNegocio.insertMediciones(data['mediciones'])
+    res = logicaNegocio.guardarMediciones(data['mediciones'])
     return '''<h1>Resultado:  {} </h1>'''.format(res)
 
-## Peticion que devuelve todas las mediciones mediante en JSON
+##/
+## http://{ip_server}/getAllMeasures
+## Peticion que devueve todas las mediciones JSON
+## @return json: JSON que contendra todas las mediciones 
+## getAllMeasures-> [Medicion]
+##/
 @app.route('/getAllMeasures')
 def getAllMeasures():
-    data = logicaNegocio.getTodasLasMediciones()
+    data = logicaNegocio.obtenerTodasLasMediciones()
     return json.dumps(data, indent=4)
 
-## Peticion que devuelve solo las ultimas medidas en JSON, segun lo que se espicifique en la URL
+##/
+## http://{ip_server}/getLastMeasures
+## Peticion que devueve las utlimas mediciones JSON
+## @return json: JSON que contendra las ultimas mediciones 
+## getLastMeasures-> [Medicion]
+##/
 @app.route('/getLastMeasures')
 def getLastMeasures():
     cuantos = request.args.get('cuantos')
-    data = logicaNegocio.getUltimasMediciones(cuantos)
+    data = logicaNegocio.obtenerLasUltimasMediciones(cuantos)
     return json.dumps(data,indent=4)
 
 ## Inicializacion del servidor
