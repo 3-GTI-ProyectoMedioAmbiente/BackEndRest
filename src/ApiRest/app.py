@@ -1,5 +1,7 @@
 from flask import Flask,request
 from logica.logicaNegocio import LogicaNegocio
+from flask_cors import CORS
+
 import json
 
 
@@ -14,6 +16,7 @@ app.config['MYSQL_HOST']='localhost'
 app.config['MYSQL_USER']='root'
 app.config['MYSQL_PASSWORD']=''
 app.config['MYSQL_DB']='db_mediciones'
+CORS(app)
 
 logicaNegocio = LogicaNegocio(app)
 
@@ -54,4 +57,4 @@ def obtenerLasUltimasMediciones():
 
 ## Inicializacion del servidor
 if __name__=='__main__':
-        app.run(host='0.0.0.0', debug=True, port=8080)
+        app.run(host='0.0.0.0', debug=True)

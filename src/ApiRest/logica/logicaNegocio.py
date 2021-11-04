@@ -42,7 +42,7 @@ class LogicaNegocio:
     ## obtenerTodasLasMediciones->[medicion]
     ##/
     def obtenerTodasLasMediciones(self):
-        data = self.db.queryStatemen("Select * from mediciones")
+        data = self.db.queryStatement("Select * from mediciones")
         return self.devolverMediciones(data)  
 
     ##/
@@ -53,7 +53,7 @@ class LogicaNegocio:
     ## N->obtenerLasUltimasMediciones->[medicion]
     ##/
     def obtenerLasUltimasMediciones(self,cuantos):
-        data = self.db.queryStatemen("SELECT * FROM mediciones ORDER BY id DESC LIMIT {}".format(cuantos))
+        data = self.db.queryStatement("SELECT * FROM mediciones ORDER BY id DESC LIMIT {}".format(cuantos))
         return self.devolverMediciones(data)
 
     ##/

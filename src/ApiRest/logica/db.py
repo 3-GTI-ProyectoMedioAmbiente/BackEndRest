@@ -34,7 +34,7 @@ class Database:
     ## @return data: Array con los datos obtenidos en la consulta
     ## Texto->queryStatemen->[Data]
     ##/
-    def queryStatemen(self,query):
+    def queryStatement(self,query):
         db = self.mysql.connection.cursor()
         db.execute(query)
         data = db.fetchall()
