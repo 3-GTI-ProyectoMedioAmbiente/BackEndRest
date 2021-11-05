@@ -12,4 +12,6 @@ Una vez instalado ejecutar en el directorio donde esten los anteriores archivos 
 
 	newman run -e [nombrearchivoentorno] [nombrearchivocoleccion]
 
+	COMANDO ACTUAL:newman run -e ProyectoMedioAmbiente.postman_environment.json ColeccionJsonPostman.json
+
 /*Si no funciona asegurate de haber enchufado el xampp y arrancado el servidor en el pueerto 8080 desde python*/
