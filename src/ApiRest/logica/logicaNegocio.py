@@ -56,6 +56,18 @@ class LogicaNegocio:
         data = self.db.queryStatement("SELECT * FROM mediciones ORDER BY id DESC LIMIT {}".format(cuantos))
         return self.devolverMediciones(data)
 
+
+    ##/
+    ## Metodo que preapra la sentencia SQL para obtener las mediciones de una fecha concreta
+    ## @param self: objeto que contiene los propios metodos y atributos de la clase
+    ## @param fecha: dia del que se recogeran todas las fechas
+    ## @return res: json con formateado que contendra las mediciones segun el parametro recibido
+    ## N->obtenerLasUltimasMediciones->[medicion]
+    ##/
+    def obtenerTodasMedicionesFecha(self,fecha):
+        data = self.db.queryStatement("SELECT * FROM mediciones WHERE fecha = '{}' ".format(fecha))
+        return self.devolverMediciones(data)
+
     ##/
     ## Crea los objetos Medicion y los prepara para ser enviados en formato JSON, segun el resultado obtenido en las consultas a la BD
     ## @param self: objeto que contiene los propios metodos y atributos de la clase
