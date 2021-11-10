@@ -42,7 +42,7 @@ class LogicaNegocio:
     ## obtenerTodasLasMediciones->[medicion]
     ##/
     def obtenerTodasLasMediciones(self):
-        data = self.db.queryStatemen("Select * from mediciones")
+        data = self.db.queryStatement("Select * from mediciones")
         return self.devolverMediciones(data)  
 
     ##/
@@ -53,7 +53,19 @@ class LogicaNegocio:
     ## N->obtenerLasUltimasMediciones->[medicion]
     ##/
     def obtenerLasUltimasMediciones(self,cuantos):
-        data = self.db.queryStatemen("SELECT * FROM mediciones ORDER BY id DESC LIMIT {}".format(cuantos))
+        data = self.db.queryStatement("SELECT * FROM mediciones ORDER BY id DESC LIMIT {}".format(cuantos))
+        return self.devolverMediciones(data)
+
+
+    ##/
+    ## Metodo que preapra la sentencia SQL para obtener las mediciones de una fecha concreta
+    ## @param self: objeto que contiene los propios metodos y atributos de la clase
+    ## @param fecha: dia del que se recogeran todas las fechas
+    ## @return res: json con formateado que contendra las mediciones segun el parametro recibido
+    ## N->obtenerLasUltimasMediciones->[medicion]
+    ##/
+    def obtenerTodasMedicionesFecha(self,fecha):
+        data = self.db.queryStatement("SELECT * FROM mediciones WHERE fecha = '{}' ".format(fecha))
         return self.devolverMediciones(data)
 
     ##/

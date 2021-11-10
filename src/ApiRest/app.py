@@ -1,5 +1,7 @@
 from flask import Flask,request
 from logica.logicaNegocio import LogicaNegocio
+from flask_cors import CORS
+
 import json
 
 
@@ -14,7 +16,7 @@ app.config['MYSQL_HOST']='localhost'
 app.config['MYSQL_USER']='root'
 app.config['MYSQL_PASSWORD']=''
 app.config['MYSQL_DB']='db_mediciones'
-
+CORS(app)
 logicaNegocio = LogicaNegocio(app)
 
 ##/
@@ -30,7 +32,7 @@ def insertMedicionJson():
     return '''<h1>Resultado:  {} </h1>'''.format(res)
 
 ##/
-## http://{ip_server}/getAllMeasures
+## http://{ip_server}/obtenerTodasLasMediciones
 ## Peticion que devueve todas las mediciones JSON
 ## @return json: JSON que contendra todas las mediciones 
 ## getAllMeasures-> [Medicion]
@@ -41,7 +43,7 @@ def obtenerTodasLasMediciones():
     return json.dumps(data, indent=4)
 
 ##/
-## http://{ip_server}/getLastMeasures
+## http://{ip_server}/obtenerLasUltimasMediciones
 ## Peticion que devueve las utlimas mediciones JSON
 ## @return json: JSON que contendra las ultimas mediciones 
 ## getLastMeasures-> [Medicion]
@@ -52,6 +54,18 @@ def obtenerLasUltimasMediciones():
     data = logicaNegocio.obtenerLasUltimasMediciones(cuantos)
     return json.dumps(data,indent=4)
 
+##/
+## http://{ip_server}/getLastMeasures
+## Peticion que devueve las medciones de un dia en concreto
+## @return json: JSON que contendra las ultimas mediciones 
+## getLastMeasures-> [Medicion]
+##/
+@app.route('/obtenerTodasMedicionesFecha')
+def obtenerTodasMedicionesFecha():
+    fecha = request.args.get('fecha')
+    data = logicaNegocio.obtenerTodasMedicionesFecha(fecha)
+    return json.dumps(data,indent=4)
+
 ## Inicializacion del servidor
 if __name__=='__main__':
-        app.run(host='0.0.0.0', debug=True, port=8080)
+        app.run(host='0.0.0.0', debug=True)
