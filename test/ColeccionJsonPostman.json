@@ -1,0 +1,175 @@
+{
+	"info": {
+		"_postman_id": "99e0b563-ea45-45ec-9d14-cebe85be6b69",
+		"name": "Sprint1",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "ObtenerLasUltimasLasMediciones",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"La respuesta tiene cuerpo\", function () { \r",
+							"     pm.response.to.be.ok; // equivalente a decir que valide que sea 200\r",
+							"     pm.response.to.be.withBody; // body tiene que exitir\r",
+							"     pm.response.to.be.json; // además que sea un JSON válido\r",
+							"});\r",
+							"// Pedimos a nuestro response payload que tengo Content-Type en el header\r",
+							"pm.test(\"Content-Type esta presente\", function () {\r",
+							"    pm.response.to.have.header(\"Content-Type\");\r",
+							"});\r",
+							"// Y comprobamos que la petición se haya servido en un determinado tiempo\r",
+							"pm.test(\"Tiempo de respuesta menor a  200ms\", function () {\r",
+							"    pm.expect(pm.response.responseTime).to.be.below(200);\r",
+							"});\r",
+							"let res_str = pm.response.json();\r",
+							"//Comprobamos si hay mediciones suficientes\r",
+							"pm.test(\"¿Hay 2 mediciones en la base de datos?\", function () {\r",
+							"    pm.expect(res_str.mediciones.length).to.be.greaterThan(1);\r",
+							"});\r",
+							"console.log(\"////////\"+ res_str.mediciones.length);\r",
+							"// Y comprobamos que la petición devuelve dos mediciones\r",
+							"pm.test(\"Obtener Ultimas Devuelve 2 mediciones\",function(){\r",
+							"    pm.expect(res_str.mediciones.length).to.be.equal(2);\r",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/obtenerLasUltimasMediciones?cuantos=2",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"obtenerLasUltimasMediciones"
+					],
+					"query": [
+						{
+							"key": "cuantos",
+							"value": "2"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "ObtenerTodasLasMediciones",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"La peticion tiene un cuerpo\", function () { \r",
+							"     pm.response.to.be.ok; // equivalente a decir que valide que sea 200\r",
+							"     pm.response.to.be.withBody; // body tiene que exitir\r",
+							"     pm.response.to.be.json; // además que sea un JSON válido\r",
+							"});\r",
+							"// Pedimos a nuestro response payload que tengo Content-Type en el header\r",
+							"pm.test(\"Existe un header Content-Type\", function () {\r",
+							"    pm.response.to.have.header(\"Content-Type\");\r",
+							"});\r",
+							"// Y comprobamos que la petición se haya servido en un determinado tiempo\r",
+							"pm.test(\"El tiempo de respuesta es menor 200ms\", function () {\r",
+							"    pm.expect(pm.response.responseTime).to.be.below(200);\r",
+							"});\r",
+							"\r",
+							"\r",
+							"let res_str = pm.response.json();\r",
+							"//res_str.data.mediciones.length;\r",
+							"console.log(\"MEDICIONES EN LA BASE DE DATOS ------>>>>>\" + res_str.mediciones.length);\r",
+							"\r",
+							"\r",
+							"pm.test(\"¿Hay mediciones en la base de datos?\",function(){\r",
+							"    pm.expect(res_str.mediciones.length).to.be.greaterThan(0);\r",
+							"})\r",
+							"\r",
+							"res_str.mediciones.forEach(function(med) {\r",
+							"    // checking if the camera has a property named \"RectilinearIR\"\r",
+							"    if(med.hasOwnProperty(\"id\")) {\r",
+							"        // test if the ImageCenterX value in the object is equal to 0.5\r",
+							"        pm.test(\"Valor de la id\", function () {\r",
+							"            let valorMedicion = med.id;\r",
+							"            pm.expect(valorMedicion).to.be.greaterThan(0);\r",
+							"        });\r",
+							"    } \r",
+							"    // checking if the camera has a property named \"Fisheye\"\r",
+							"    if (med.hasOwnProperty(\"medicion\")) {\r",
+							"        // test if the ImageCenterX value in the object is equal to 0.5109375\r",
+							"            pm.test(\"Hay campo de valor medicion\", function () {\r",
+							"           \r",
+							"            pm.expect(0).to.eql(0);//le damos el visto bueno si entra al if\r",
+							"        });\r",
+							"    }\r",
+							"});\r",
+							"\r",
+							"//console.log(pm.environment.get(\"tamanyo\"));"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:8080/obtenerTodasLasMediciones",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"obtenerTodasLasMediciones"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GuardarMedicion",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n \"mediciones\": [\r\n {\r\n \"medicion\": 25545.25,\r\n \"fecha\": \"2021/10/16\",\r\n \"hora\":\"15:15\",\r\n \"localizacion_lat\": 17.1,\r\n \"localizacion_lon\": 15.2,\r\n \"id\": 1\r\n },\r\n {\r\n \"medicion\": 58.25,\r\n \"fecha\": \"2021/10/16\",\r\n \"hora\": \"16:24\",\r\n \"localizacion_lat\": 17.1,\r\n \"localizacion_lon\": 15.2,\r\n \"id\": 5\r\n }\r\n ]\r\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8080/insertMedicionJson",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"insertMedicionJson"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
