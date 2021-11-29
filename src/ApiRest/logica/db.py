@@ -2,6 +2,8 @@ from flask_mysqldb import MySQL
 #-----------------------------------------------------------------------------------
 # @author: Juan Carlos Hernandez Ramirez
 # Fecha: 14/10/2021
+# Nombre:db.py
+# Descripcion: Clase que controla la logica para conectarse 
 #-----------------------------------------------------------------------------------
 
 class Database:

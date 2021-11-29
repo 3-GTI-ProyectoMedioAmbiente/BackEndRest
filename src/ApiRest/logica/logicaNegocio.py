@@ -64,7 +64,7 @@ class LogicaNegocio:
     ## @return res: json con formateado que contendra las mediciones segun el parametro recibido
     ## N->obtenerLasUltimasMediciones->[medicion]
     ##/
-    def obtenerTodasMedicionesFecha(self,fecha):
+    def obtenerTodasMedicionesPorFecha(self,fecha):
         data = self.db.queryStatement("SELECT * FROM mediciones WHERE fecha = '{}' ".format(fecha))
         return self.devolverMediciones(data)
 

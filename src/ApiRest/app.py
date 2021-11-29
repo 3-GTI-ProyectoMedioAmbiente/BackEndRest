@@ -18,7 +18,6 @@ app.config['MYSQL_PASSWORD']=''
 app.config['MYSQL_DB']='db_mediciones'
 CORS(app)
 logicaNegocio = LogicaNegocio(app)
-
 ##/
 ## http://{ip_server}/insertMedicionJson
 ## Peticion que controla la insercion de datos mediante JSON
@@ -55,15 +54,15 @@ def obtenerLasUltimasMediciones():
     return json.dumps(data,indent=4)
 
 ##/
-## http://{ip_server}/getLastMeasures
+## http://{ip_server}/obtenerTodasMedicionesPorFecha
 ## Peticion que devueve las medciones de un dia en concreto
 ## @return json: JSON que contendra las ultimas mediciones 
 ## getLastMeasures-> [Medicion]
 ##/
-@app.route('/obtenerTodasMedicionesFecha')
-def obtenerTodasMedicionesFecha():
+@app.route('/obtenerTodasMedicionesPorFecha')
+def obtenerTodasMedicionesPorFecha():
     fecha = request.args.get('fecha')
-    data = logicaNegocio.obtenerTodasMedicionesFecha(fecha)
+    data = logicaNegocio.obtenerTodasMedicionesPorFecha(fecha)
     return json.dumps(data,indent=4)
 
 ## Inicializacion del servidor
