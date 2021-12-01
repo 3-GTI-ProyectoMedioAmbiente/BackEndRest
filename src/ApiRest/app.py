@@ -1,7 +1,6 @@
 from flask import Flask,request
 from logica.logicaNegocio import LogicaNegocio
 from flask_cors import CORS
-
 import json
 
 
@@ -54,16 +53,30 @@ def obtenerLasUltimasMediciones():
     return json.dumps(data,indent=4)
 
 ##/
-## http://{ip_server}/obtenerTodasMedicionesPorFecha
+## http://{ip_server}/obtenerMedicionesUltimas24h
 ## Peticion que devueve las medciones de un dia en concreto
 ## @return json: JSON que contendra las ultimas mediciones 
 ## getLastMeasures-> [Medicion]
 ##/
-@app.route('/obtenerTodasMedicionesPorFecha')
-def obtenerTodasMedicionesPorFecha():
-    fecha = request.args.get('fecha')
-    data = logicaNegocio.obtenerTodasMedicionesPorFecha(fecha)
+@app.route('/obtenerMedicionesUltimas24h')
+def obtenerMedicionesUltimas24h():
+    data = logicaNegocio.obtenerMedicionesUltimas24h()
     return json.dumps(data,indent=4)
+
+##/
+## http://{ip_server}/obtenerMedicionesConPeriodoPorUsuario
+## Peticion que devueve las medciones segun un periodo concreto por usuario.
+## El periodo pude ser diario, mensual o semanal 
+## @return json: JSON que contendra las ultimas mediciones 
+## getLastMeasures-> [Medicion]
+##/
+@app.route('/obtenerMedicionesConPeriodoPorUsuario')
+def obtenerMedicionesConPeriodoPorUsuario():
+    periodo = request.args.get('periodo')
+    idUsuario = request.args.get('idUsuario')
+    data = logicaNegocio.obtenerMedicionesConPeriodoPorUsuario(periodo,idUsuario)
+    return json.dumps(data,indent=4)
+
 
 ## Inicializacion del servidor
 if __name__=='__main__':

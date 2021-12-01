@@ -1,5 +1,7 @@
 from logica.db import Database
 from model.ModelMedicion import Medicion
+import datetime
+
 #-----------------------------------------------------------------------------------
 # @author: Juan Carlos Hernandez Ramirez
 # Fecha: 14/10/2021
@@ -64,8 +66,43 @@ class LogicaNegocio:
     ## @return res: json con formateado que contendra las mediciones segun el parametro recibido
     ## N->obtenerLasUltimasMediciones->[medicion]
     ##/
-    def obtenerTodasMedicionesPorFecha(self,fecha):
-        data = self.db.queryStatement("SELECT * FROM mediciones WHERE fecha = '{}' ".format(fecha))
+    def obtenerMedicionesUltimas24h(self):
+        now = datetime.datetime.now()-datetime.timedelta(hours=24)
+        time = now.strftime("%H:%M:%S") 
+        yesterdayDate = now.strftime("%Y-%m-%d")
+        data = self.db.queryStatement("SELECT * FROM mediciones WHERE concat(fecha,' ',hora)>='{} {}'".format(yesterdayDate,time))
+        return self.devolverMediciones(data)
+
+    ##/
+    ## Metodo que preapra la sentencia SQL para obtener las mediciones de un perido concrecto por usuario
+    ## @param self: objeto que contiene los propios metodos y atributos de la clase
+    ## @param periodo: perido del que se quieren coger las medidas
+    ## @param idUsuario: Id del usuario del que se sacaran las medidas
+    ## @return res: json con formateado que contendra las mediciones segun el parametro recibido
+    ## N->obtenerLasUltimasMediciones->[medicion]
+    ##/
+    def obtenerMedicionesConPeriodoPorUsuario(self, periodo, idUsuario):
+        if periodo == "dia":
+            now = datetime.datetime.now()-datetime.timedelta(hours=24)
+            dateFilter = now.strftime("%Y-%m-%d")
+
+        elif periodo =="semana":
+            now = datetime.datetime.now()-datetime.timedelta(days=7)
+            dateFilter = now.strftime("%Y-%m-%d")
+
+        elif periodo=="mes":
+            now = datetime.datetime.now()-datetime.timedelta(days=30)
+            dateFilter = now.strftime("%Y-%m-%d")
+
+        else:
+            print("invalidInput")
+            return
+        time = now.strftime("%H:%M:%S") 
+        data = self.db.queryStatement(
+            "SELECT m.id, m.medicion, m.fecha, m.hora, m.localizacion_lat, m.localizacion_lon, m.id_sensor, m.id_tipoMedicion "
+            +"FROM mediciones m LEFT JOIN sensor s ON m.id_sensor=s.id_sensor LEFT JOIN usuario u ON u.id_usuario=s.id_sensor "
+            +"WHERE u.id_usuario='{}' and (fecha>='{}')".format(idUsuario,dateFilter,time))
+
         return self.devolverMediciones(data)
 
     ##/
@@ -80,4 +117,5 @@ class LogicaNegocio:
         res['mediciones'] = []
         for row in data:
             res['mediciones'].append(Medicion(row[0],row[1],row[2],row[3],row[4],row[5]).toJson())
+        print(res)
         return res
