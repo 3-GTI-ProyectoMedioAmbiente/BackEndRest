@@ -65,6 +65,21 @@ def obtenerTodasMedicionesPorFecha():
     data = logicaNegocio.obtenerTodasMedicionesPorFecha(fecha)
     return json.dumps(data,indent=4)
 
+
+##/
+## http://{ip_server}/loginUsuario
+## Peticion que devueve un usuario dependiendo del correo y la contraseña
+## @return json: JSON que contendra el usuario
+## mail:Texto,contrasenya:Texto -> loginUsuario -> Usuario
+##/
+@app.route('/loginUsuario')
+def loginUsuario():
+    data = request.get_json()
+    #print(data)
+    res = logicaNegocio.loginUsuario(data["mail"],data["contrasenya"])
+    
+    return '''<h1>Resultado:  {} </h1>'''.format(res)
+
 ## Inicializacion del servidor
 if __name__=='__main__':
         app.run(host='0.0.0.0', debug=True)

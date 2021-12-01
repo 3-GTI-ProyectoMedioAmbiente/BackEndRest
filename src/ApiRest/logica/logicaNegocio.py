@@ -81,3 +81,24 @@ class LogicaNegocio:
         for row in data:
             res['mediciones'].append(Medicion(row[0],row[1],row[2],row[3],row[4],row[5]).toJson())
         return res
+
+
+    ##/
+    ## loginUsuario()
+    ## Recibe un email y una contraseña y si estos están en la base de datos devuelve un usuario
+    ## @param self: objeto que contiene los propios metodos y atributos de la clase
+    ## @param mail: texto que contendrá el correo que se quiere buscar en la bd
+    ## @param contrasenya: texto que contendrá la contraseña que se quiere buscar en la bd
+    ## @return res: json que contiene el usuario, si el usuario no se encuentra en la base de datos se devolverá  -1
+    ## mail:Texto,contrasenya:Texto -> loginUsuario-> JSON
+    ##/
+    def loginUsuario(self,mail,contrasenya):
+        data = self.db.queryStatement("SELECT * FROM `usuario` WHERE mail LIKE '{}' AND password LIKE '{}'".format(mail,contrasenya))
+        print("ESto ---> ")
+        if(len(data) == 0):
+            return "-1"
+        else:
+            return data
+        
+        
+        
