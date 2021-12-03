@@ -6,7 +6,7 @@ import json
 
 
 #-----------------------------------------------------------------------------------
-# @author: Juan Carlos Hernandez Ramirez
+# @author: Juan Carlos Hernandez Ramirez y Sergi
 #Fecha: 14/10/2021
 #-----------------------------------------------------------------------------------
 
@@ -69,6 +69,8 @@ def obtenerTodasMedicionesPorFecha():
 ##/
 ## http://{ip_server}/loginUsuario
 ## Peticion que devueve un usuario dependiendo del correo y la contraseña
+## @param mail: Correo del usuario que se quiere loguear
+## @param contrasenya: Contraseña del usuario que se quiere loguear
 ## @return json: JSON que contendra el usuario
 ## mail:Texto,contrasenya:Texto -> loginUsuario -> Usuario
 ##/
@@ -77,6 +79,36 @@ def loginUsuario():
     data = request.get_json()
     #print(data)
     res = logicaNegocio.loginUsuario(data["mail"],data["contrasenya"])
+    
+    return '''<h1>Resultado:  {} </h1>'''.format(res)
+
+##/
+## http://{ip_server}/crearUsuario
+## Peticion que crea un usuario para la base de datos
+## @param Usuario: Objeto Json que contiene los datos del usuario
+## Usuario -> crearUsuario -> Z
+## @return HTML: html que contiene el resultado obtenido en la insercion exito=1, fallo=-1
+##/
+@app.route('/crearUsuario', methods=['POST'])
+def crearUsuario():
+    data = request.get_json()
+    #print(data)
+    res = logicaNegocio.crearUsuario(data)
+    
+    return '''<h1>Resultado:  {} </h1>'''.format(res)
+
+##/
+## http://{ip_server}/editarUsuario
+## Peticion que permite editar un usuario
+## @param Usuario: Objeto Json que contiene los datos del usuario
+## Usuario -> editarUsuario -> Z
+## @return: Entero que indica si todo ha ido bien o no
+##/
+@app.route('/editarUsuario', methods=['PUT'])
+def editarUsuario():
+    data = request.get_json()
+    #print(data)
+    res = logicaNegocio.editarUsuario(data)
     
     return '''<h1>Resultado:  {} </h1>'''.format(res)
 

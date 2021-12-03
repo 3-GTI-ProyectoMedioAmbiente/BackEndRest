@@ -1,5 +1,6 @@
 from logica.db import Database
 from model.ModelMedicion import Medicion
+from model.ModelUsuario import Usuario
 #-----------------------------------------------------------------------------------
 # @author: Juan Carlos Hernandez Ramirez
 # Fecha: 14/10/2021
@@ -90,7 +91,7 @@ class LogicaNegocio:
     ## @param mail: texto que contendrá el correo que se quiere buscar en la bd
     ## @param contrasenya: texto que contendrá la contraseña que se quiere buscar en la bd
     ## @return res: json que contiene el usuario, si el usuario no se encuentra en la base de datos se devolverá  -1
-    ## mail:Texto,contrasenya:Texto -> loginUsuario-> JSON
+    ## mail:Texto,contrasenya:Texto -> loginUsuario-> Usuario
     ##/
     def loginUsuario(self,mail,contrasenya):
         data = self.db.queryStatement("SELECT * FROM `usuario` WHERE mail LIKE '{}' AND password LIKE '{}'".format(mail,contrasenya))
@@ -98,7 +99,43 @@ class LogicaNegocio:
         if(len(data) == 0):
             return "-1"
         else:
-            return data
-        
-        
-        
+            usuario = Usuario(data["id_usuario"],data["mail"],data["nombre"],data["apellidos"],data["isAutobusero"],data["edad"],data["matricula"],data["telefono"],data["password"])
+            return usuario
+
+    ##/
+    ## crearUsuario()
+    ## Recibe un objeto json con los datos del usuario y lo mete en la base de datos
+    ## @param self: objeto que contiene los propios metodos y atributos de la clase
+    ## @param usuario: objeto json que contiene los datos del usuario
+    ## @return res: entero que indicará el resultado de la operación de la base de datos 
+    ##  Json -> crearUsuario -> Z
+    ##/
+    def crearUsuario(self,usuario):
+        data = self.db.queryStatement("SELECT * FROM `usuario` WHERE mail LIKE '{}' AND password LIKE '{}'".format(usuario["mail"],usuario["password"]))
+        if(len(data) == 0):
+
+            statement = "INSERT INTO `usuario` (mail,nombre,apellidos,isAutobusero,edad,matricula,telefono,password) VALUES ('{}','{}','{}','{}','{}','{}','{}','{}');".format(
+            usuario['mail'],usuario['nombre'],usuario['apellidos'],usuario['isAutobusero'], usuario['edad'], usuario['matricula'], usuario['telefono'], usuario['password'] )
+            resTMP = self.db.insertStatement(statement)
+
+            return 1
+        else:
+            return "-1"
+
+    ##/
+    ## editarUsuario()
+    ## Recibe un objeto json con los datos del usuario y actualiza algun usuario que tenga en la base de datos
+    ## @param self: objeto que contiene los propios metodos y atributos de la clase
+    ## @param usuario: objeto json que contiene los datos del usuario
+    ## @return res: entero que indicará el resultado de la operación de la base de datos 
+    ##  Usuario -> editarUsuario() -> Z
+    ##/  
+
+    def editarUsuario(self,usuario):
+        statement = "UPDATE `usuario` SET `mail`='{}',`nombre`='{}',`apellidos`='{}',`isAutobusero`='{}',`edad`='{}',`matricula`='{}',`telefono`='{}',`password`='{}' WHERE `id_usuario` = '{}' ".format(
+            usuario['mail'],usuario['nombre'],usuario['apellidos'],usuario['isAutobusero'], usuario['edad'], usuario['matricula'], usuario['telefono'], usuario['password'],usuario['id_usuario'])
+        resTMP = self.db.insertStatement(statement)
+        return 1
+    
+
+       
