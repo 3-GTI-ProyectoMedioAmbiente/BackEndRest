@@ -76,11 +76,12 @@ def obtenerTodasMedicionesPorFecha():
 ##/
 @app.route('/loginUsuario')
 def loginUsuario():
-    data = request.get_json()
+    mail = request.args.get('mail')
+    contrasenya = request.args.get('pass')
     #print(data)
-    res = logicaNegocio.loginUsuario(data["mail"],data["contrasenya"])
+    res = logicaNegocio.loginUsuario(mail,contrasenya)
     
-    return '''<h1>Resultado:  {} </h1>'''.format(res)
+    return res
 
 ##/
 ## http://{ip_server}/crearUsuario

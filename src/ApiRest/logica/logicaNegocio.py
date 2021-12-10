@@ -1,6 +1,7 @@
 from logica.db import Database
 from model.ModelMedicion import Medicion
 from model.ModelUsuario import Usuario
+import json
 #-----------------------------------------------------------------------------------
 # @author: Juan Carlos Hernandez Ramirez
 # Fecha: 14/10/2021
@@ -95,12 +96,21 @@ class LogicaNegocio:
     ##/
     def loginUsuario(self,mail,contrasenya):
         data = self.db.queryStatement("SELECT * FROM `usuario` WHERE mail LIKE '{}' AND password LIKE '{}'".format(mail,contrasenya))
-        print("ESto ---> ")
+        print("Entro a la logica del negocio ---> ")
         if(len(data) == 0):
             return "-1"
         else:
-            usuario = Usuario(data["id_usuario"],data["mail"],data["nombre"],data["apellidos"],data["isAutobusero"],data["edad"],data["matricula"],data["telefono"],data["password"])
-            return usuario
+            for row in data:
+                print("data ---> ")
+            
+            #print(data)
+            
+            usuario = Usuario(data[0][0],data[0][1],data[0][2],data[0][3],data[0][4],data[0][5],data[0][6],data[0][7],data[0][8]).toJson()
+            res = []
+            res.append(usuario)
+            
+            #print(res[0]['mail'])
+            return res[0]
 
     ##/
     ## crearUsuario()
