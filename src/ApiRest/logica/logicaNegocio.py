@@ -1,5 +1,6 @@
 from logica.db import Database
 from model.ModelMedicion import Medicion
+from model.ModelUsuario import Usuario
 import datetime
 
 #-----------------------------------------------------------------------------------
