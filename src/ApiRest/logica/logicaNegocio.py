@@ -1,12 +1,7 @@
 from logica.db import Database
 from model.ModelMedicion import Medicion
 from model.ModelUsuario import Usuario
-<<<<<<< HEAD
 import datetime
-
-=======
-import json
->>>>>>> develop
 #-----------------------------------------------------------------------------------
 # @author: Juan Carlos Hernandez Ramirez
 # Fecha: 14/10/2021
@@ -122,10 +117,6 @@ class LogicaNegocio:
         res['mediciones'] = []
         for row in data:
             res['mediciones'].append(Medicion(row[0],row[1],row[2],row[3],row[4],row[5]).toJson())
-<<<<<<< HEAD
-        print(res)
-        return res
-=======
         return res
 
 
@@ -191,6 +182,3 @@ class LogicaNegocio:
         resTMP = self.db.insertStatement(statement)
         return 1
     
-
-       
->>>>>>> develop
