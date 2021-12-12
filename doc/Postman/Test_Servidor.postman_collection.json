@@ -1,0 +1,130 @@
+{
+	"variables": [],
+	"info": {
+		"name": "Test_Servidor",
+		"_postman_id": "b478d0b1-f9fd-2fe5-d0b4-3aa9365a8690",
+		"description": "",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Ultimas Mediciones",
+			"request": {
+				"url": {
+					"raw": "{{base_url}}/obtenerLasUltimasMediciones?cuantos=2",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"obtenerLasUltimasMediciones"
+					],
+					"query": [
+						{
+							"key": "cuantos",
+							"value": "2",
+							"equals": true,
+							"description": ""
+						}
+					],
+					"variable": []
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n \"mediciones\": [\r\n {\r\n \"medicion\": 150,\r\n \"fecha\": \"2021/11/26\",\r\n \"hora\":\"15:00\",\r\n \"localizacion_lat\": 17.1,\r\n \"localizacion_lon\": 15.2,\r\n \"id\": 1\r\n },\r\n {\r\n \"medicion\": 20,\r\n \"fecha\": \"2021/11/26\",\r\n \"hora\": \"15:05\",\r\n \"localizacion_lat\": 17.1,\r\n \"localizacion_lon\": 15.2,\r\n \"id\": 5\r\n }\r\n ]\r\n}"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Todas las Mediciones",
+			"request": {
+				"url": "{{base_url}}/obtenerTodasLasMediciones",
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Insertar Medicion",
+			"request": {
+				"url": "{{base_url}}/insertMedicionJson",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					},
+					{
+						"key": "",
+						"value": "",
+						"description": "",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n \"mediciones\": [\r\n {\r\n \"medicion\": 25545.25,\r\n \"fecha\": \"2021/10/16\",\r\n \"hora\":\"15:00\",\r\n \"localizacion_lat\": 17.1,\r\n \"localizacion_lon\": 15.2\r\n },\r\n {\r\n \"medicion\": 58.25,\r\n \"fecha\": \"2021/10/16\",\r\n \"hora\": \"16:00\",\r\n \"localizacion_lat\": 17.1,\r\n \"localizacion_lon\": 15.2\r\n }\r\n ]\r\n}"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Mediciones Ultimas 24h",
+			"request": {
+				"url": "{{base_url}}/obtenerMedicionesUltimas24h",
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Mediciones por usuario y periodo",
+			"request": {
+				"url": {
+					"raw": "{{base_url}}/obtenerMedicionesConPeriodoPorUsuario?periodo=mes&idUsuario=1",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"obtenerMedicionesConPeriodoPorUsuario"
+					],
+					"query": [
+						{
+							"key": "periodo",
+							"value": "mes",
+							"equals": true,
+							"description": ""
+						},
+						{
+							"key": "idUsuario",
+							"value": "1",
+							"equals": true,
+							"description": ""
+						}
+					],
+					"variable": []
+				},
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"description": ""
+			},
+			"response": []
+		}
+	]
+}
