@@ -93,7 +93,6 @@ def loginUsuario():
     contrasenya = request.args.get('pass')
     #print(data)
     res = logicaNegocio.loginUsuario(mail,contrasenya)
-    
     return res
 
 ##/
@@ -108,7 +107,6 @@ def crearUsuario():
     data = request.get_json()
     #print(data)
     res = logicaNegocio.crearUsuario(data)
-    
     return '''<h1>Resultado:  {} </h1>'''.format(res)
 
 ##/

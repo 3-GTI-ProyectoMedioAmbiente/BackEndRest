@@ -11,13 +11,15 @@ class Medicion:
     ## @return json: Objeto Json que tendra el objeto Medicion en formato JSON
     ## toJson()->json
     ##/
-    def __init__(self,id, medicion, fecha, hora, localizacion_lat, localizacion_lon):
+    def __init__(self,id, medicion, fecha, hora, localizacion_lat, localizacion_lon,id_sensor,id_tipoMedicion):
         self.id = id
         self.medicion = medicion
         self.fecha = fecha
         self.hora = hora
         self.localizacion_lat = localizacion_lat
         self.localizacion_lon = localizacion_lon
+        self.id_sensor = id_sensor
+        self.id_tipoMedicion = id_tipoMedicion
 
     ##/
     ## Metodo que genera un objeto JSON a partir de los atributos de la clase
@@ -32,6 +34,8 @@ class Medicion:
             "fecha": "{}".format(self.fecha),
             "hora": "{}".format(self.hora),
             "localizacion_lat": self.localizacion_lat,
-            "localizacion_lon": self.localizacion_lon
+            "localizacion_lon": self.localizacion_lon,
+            "id_sensor":self.id_sensor,
+            "id_tipoMedicion":self.id_tipoMedicion
             }
         return json

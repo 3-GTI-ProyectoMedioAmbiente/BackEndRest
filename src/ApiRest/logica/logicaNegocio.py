@@ -27,8 +27,8 @@ class LogicaNegocio:
     def guardarMediciones(self,mediciones):
         resContador = 0
         for medicion in mediciones:
-            statement = "INSERT INTO mediciones (medicion,fecha,hora,localizacion_lat,localizacion_lon) VALUES ({},'{}','{}',{},{});".format(
-            medicion['medicion'],medicion['fecha'],medicion['hora'],medicion['localizacion_lat'], medicion['localizacion_lon'] )
+            statement = "INSERT INTO mediciones (medicion,fecha,hora,localizacion_lat,localizacion_lon,id_sensor,id_tipoMedicion) VALUES ({},'{}','{}',{},{},{},{});".format(
+            medicion['medicion'],medicion['fecha'],medicion['hora'],medicion['localizacion_lat'], medicion['localizacion_lon'], medicion['id_sensor'], medicion['id_tipoMedicion'])
             resTMP = self.db.insertStatement(statement)
             if resTMP==1:
                 resContador+=1
@@ -116,7 +116,7 @@ class LogicaNegocio:
         res = {}
         res['mediciones'] = []
         for row in data:
-            res['mediciones'].append(Medicion(row[0],row[1],row[2],row[3],row[4],row[5]).toJson())
+            res['mediciones'].append(Medicion(row[0],row[1],row[2],row[3],row[4],row[5],row[6],row[7]).toJson())
         return res
 
 
