@@ -1,12 +1,12 @@
 {
 	"info": {
-		"_postman_id": "99e0b563-ea45-45ec-9d14-cebe85be6b69",
-		"name": "Sprint1",
+		"_postman_id": "48a0d6c4-f440-409f-9824-1367ccf68f06",
+		"name": "Test_Servidor",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"item": [
 		{
-			"name": "ObtenerLasUltimasLasMediciones",
+			"name": "Ultimas Mediciones",
 			"event": [
 				{
 					"listen": "test",
@@ -27,7 +27,7 @@
 							"});\r",
 							"let res_str = pm.response.json();\r",
 							"//Comprobamos si hay mediciones suficientes\r",
-							"pm.test(\"¿Hay 2 mediciones en la base de datos?\", function () {\r",
+							"pm.test(\"¿Hay 2 o más mediciones en la base de datos?\", function () {\r",
 							"    pm.expect(res_str.mediciones.length).to.be.greaterThan(1);\r",
 							"});\r",
 							"console.log(\"////////\"+ res_str.mediciones.length);\r",
@@ -42,14 +42,17 @@
 			],
 			"request": {
 				"method": "GET",
-				"header": [],
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
 				"url": {
-					"raw": "http://localhost:8080/obtenerLasUltimasMediciones?cuantos=2",
-					"protocol": "http",
+					"raw": "{{base_url}}/obtenerLasUltimasMediciones?cuantos=2",
 					"host": [
-						"localhost"
+						"{{base_url}}"
 					],
-					"port": "8080",
 					"path": [
 						"obtenerLasUltimasMediciones"
 					],
@@ -64,7 +67,7 @@
 			"response": []
 		},
 		{
-			"name": "ObtenerTodasLasMediciones",
+			"name": "Todas las Mediciones",
 			"event": [
 				{
 					"listen": "test",
@@ -94,31 +97,322 @@
 							"    pm.expect(res_str.mediciones.length).to.be.greaterThan(0);\r",
 							"})\r",
 							"\r",
-							"res_str.mediciones.forEach(function(med) {\r",
-							"    // checking if the camera has a property named \"RectilinearIR\"\r",
-							"    if(med.hasOwnProperty(\"id\")) {\r",
-							"        // test if the ImageCenterX value in the object is equal to 0.5\r",
-							"        pm.test(\"Valor de la id\", function () {\r",
-							"            let valorMedicion = med.id;\r",
+							"\r",
+							"    \r",
+							"    if(res_str.mediciones[0].hasOwnProperty(\"id\")) {\r",
+							"        \r",
+							"        pm.test(\"Hay un campo id\", function () {\r",
+							"            let valorMedicion = res_str.mediciones[0].id;\r",
 							"            pm.expect(valorMedicion).to.be.greaterThan(0);\r",
 							"        });\r",
 							"    } \r",
-							"    // checking if the camera has a property named \"Fisheye\"\r",
-							"    if (med.hasOwnProperty(\"medicion\")) {\r",
-							"        // test if the ImageCenterX value in the object is equal to 0.5109375\r",
-							"            pm.test(\"Hay campo de valor medicion\", function () {\r",
+							"    \r",
+							"    if (res_str.mediciones[0].hasOwnProperty(\"medicion\")) {\r",
+							"       \r",
+							"            pm.test(\"Hay un campo medicion\", function () {\r",
 							"           \r",
 							"            pm.expect(0).to.eql(0);//le damos el visto bueno si entra al if\r",
 							"        });\r",
 							"    }\r",
-							"});\r",
-							"\r",
-							"//console.log(pm.environment.get(\"tamanyo\"));"
+							"    if (res_str.mediciones[0].hasOwnProperty(\"fecha\")) {\r",
+							"       \r",
+							"            pm.test(\"Hay un campo fecha\", function () {\r",
+							"           \r",
+							"            pm.expect(0).to.eql(0);//le damos el visto bueno si entra al if\r",
+							"        });\r",
+							"    }\r",
+							"    if (res_str.mediciones[0].hasOwnProperty(\"hora\")) {\r",
+							"       \r",
+							"            pm.test(\"Hay un campo hora\", function () {\r",
+							"           \r",
+							"            pm.expect(0).to.eql(0);//le damos el visto bueno si entra al if\r",
+							"        });\r",
+							"    }\r",
+							"    if (res_str.mediciones[0].hasOwnProperty(\"localizacion_lat\")) {\r",
+							"       \r",
+							"            pm.test(\"Hay campo localizacion_lat\", function () {\r",
+							"           \r",
+							"            pm.expect(0).to.eql(0);//le damos el visto bueno si entra al if\r",
+							"        });\r",
+							"    }\r",
+							"    if (res_str.mediciones[0].hasOwnProperty(\"localizacion_lon\")) {\r",
+							"       \r",
+							"            pm.test(\"Hay campo de valor localizacion_lon\", function () {\r",
+							"           \r",
+							"            pm.expect(0).to.eql(0);//le damos el visto bueno si entra al if\r",
+							"        });\r",
+							"    }\r",
+							""
 						],
 						"type": "text/javascript"
 					}
 				}
 			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{base_url}}/obtenerTodasLasMediciones",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"obtenerTodasLasMediciones"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Insertar Medicion",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"/**\r",
+							" * Autor : Sergi Sirvent Sempere\r",
+							" * Fecha: 11/2021\r",
+							" * Test del metodo guardarMedicion\r",
+							" * \r",
+							" */\r",
+							"\r",
+							"\r",
+							"pm.test(\"La respuesta de la peticion es 200\", function () { \r",
+							"    \r",
+							"     pm.response.to.be.ok; // equivalente a decir que valide que sea 200\r",
+							"     \r",
+							"});\r",
+							"// Pedimos a nuestro response payload que tengo Content-Type en el header\r",
+							"pm.test(\"El header de Content-Type esta presente\", function () {\r",
+							"    pm.response.to.have.header(\"Content-Type\");\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "",
+						"value": "",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n \"mediciones\": [\r\n {\r\n \"medicion\": 25545.25,\r\n \"fecha\": \"2021/10/16\",\r\n \"hora\":\"15:00\",\r\n \"localizacion_lat\": 17.1,\r\n \"localizacion_lon\": 15.2\r\n },\r\n {\r\n \"medicion\": 58.25,\r\n \"fecha\": \"2021/10/16\",\r\n \"hora\": \"16:00\",\r\n \"localizacion_lat\": 17.1,\r\n \"localizacion_lon\": 15.2\r\n }\r\n ]\r\n}"
+				},
+				"url": {
+					"raw": "{{base_url}}/insertMedicionJson",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"insertMedicionJson"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Mediciones Ultimas 24h",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"La respuesta de la peticion es 200\", function () { \r",
+							"    \r",
+							"     pm.response.to.be.ok; // equivalente a decir que valide que sea 200\r",
+							"     \r",
+							"});\r",
+							"// Pedimos a nuestro response payload que tengo Content-Type en el header\r",
+							"pm.test(\"El header de Content-Type esta presente\", function () {\r",
+							"    pm.response.to.have.header(\"Content-Type\");\r",
+							"});\r",
+							"\r",
+							"//comprobamos si la repuesta tiene cuerpo \r",
+							"pm.test(\"La respuesta tiene cuerpo\",function(){\r",
+							"    pm.expect(pm.response.body != \"\")\r",
+							"})\r",
+							"\r",
+							"//comprobamos que la respuesta no esta vacia\r",
+							"pm.test(\"El cuerpo de la respuesta no está vacío\",function(){\r",
+							"    pm.expect(pm.response.json.length).to.be.greaterThan(0)\r",
+							"})\r",
+							"//console.log(pm.response.json.length)"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{base_url}}/obtenerMedicionesUltimas24h",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"obtenerMedicionesUltimas24h"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Mediciones por usuario y periodo",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"La respuesta de la peticion es 200\", function () { \r",
+							"    \r",
+							"     pm.response.to.be.ok; // equivalente a decir que valide que sea 200\r",
+							"     \r",
+							"});\r",
+							"// Pedimos a nuestro response payload que tengo Content-Type en el header\r",
+							"pm.test(\"El header de Content-Type esta presente\", function () {\r",
+							"    pm.response.to.have.header(\"Content-Type\");\r",
+							"});\r",
+							"//comprobamos si la repuesta tiene cuerpo \r",
+							"pm.test(\"La respuesta tiene cuerpo\",function(){\r",
+							"    pm.expect(pm.response.body != \"\")\r",
+							"})\r",
+							"//comprobamos que el metodo es get\r",
+							"pm.test(\"La peticion tiene metodo GET\",function(){\r",
+							"    pm.expect(pm.request.method == \"GET\")\r",
+							"})\r",
+							"//comprobamos que la respuesta no esta vacia\r",
+							"pm.test(\"El cuerpo de la respuesta no está vacío\",function(){\r",
+							"    pm.expect(pm.response.json.length).to.be.greaterThan(0)\r",
+							"})\r",
+							"console.log(pm.response.json)\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{base_url}}/obtenerMedicionesConPeriodoPorUsuario?periodo=mes&idUsuario=1",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"obtenerMedicionesConPeriodoPorUsuario"
+					],
+					"query": [
+						{
+							"key": "periodo",
+							"value": "mes"
+						},
+						{
+							"key": "idUsuario",
+							"value": "1"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "LoginUsuario",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"La respuesta tiene cuerpo\", function () { \r",
+							"     pm.response.to.be.ok; // equivalente a decir que valide que sea 200\r",
+							"     pm.response.to.be.withBody; // body tiene que exitir\r",
+							"     pm.response.to.be.json; // además que sea un JSON válido\r",
+							"});\r",
+							"// Pedimos a nuestro response payload que tengo Content-Type en el header\r",
+							"pm.test(\"Existe un header Content-Type\", function () {\r",
+							"    pm.response.to.have.header(\"Content-Type\");\r",
+							"});\r",
+							"// Y comprobamos que la petición se haya servido en un determinado tiempo\r",
+							"pm.test(\"El tiempo de respuesta es menor 200ms\", function () {\r",
+							"    pm.expect(pm.response.responseTime).to.be.below(200);\r",
+							"});\r",
+							"let res_str = pm.response.json();\r",
+							"console.log(res_str.apellidos)\r",
+							"\r",
+							"if(res_str.hasOwnProperty(\"apellidos\")) {\r",
+							"        \r",
+							"        pm.test(\"Hay un campo apellidos\", function () {\r",
+							"            pm.expect(1).to.be.greaterThan(0);\r",
+							"        });\r",
+							"}\r",
+							"if(res_str.hasOwnProperty(\"edad\")) {\r",
+							"        \r",
+							"        pm.test(\"Hay un campo edad\", function () {\r",
+							"            pm.expect(1).to.be.greaterThan(0);\r",
+							"        });\r",
+							"}\r",
+							"if(res_str.hasOwnProperty(\"id\")) {\r",
+							"        \r",
+							"        pm.test(\"Hay un campo id\", function () {\r",
+							"            pm.expect(1).to.be.greaterThan(0);\r",
+							"        });\r",
+							"}\r",
+							"if(res_str.hasOwnProperty(\"isAutobusero\")) {\r",
+							"        \r",
+							"        pm.test(\"Hay un campo isAutobusero\", function () {\r",
+							"            pm.expect(1).to.be.greaterThan(0);\r",
+							"        });\r",
+							"}\r",
+							"if(res_str.hasOwnProperty(\"mail\")) {\r",
+							"        \r",
+							"        pm.test(\"Hay un campo mail\", function () {\r",
+							"            pm.expect(1).to.be.greaterThan(0);\r",
+							"        });\r",
+							"}\r",
+							"if(res_str.hasOwnProperty(\"matricula\")) {\r",
+							"        \r",
+							"        pm.test(\"Hay un campo matricula\", function () {\r",
+							"            pm.expect(1).to.be.greaterThan(0);\r",
+							"        });\r",
+							"}\r",
+							"if(res_str.hasOwnProperty(\"nombre\")) {\r",
+							"        \r",
+							"        pm.test(\"Hay un campo nombre\", function () {\r",
+							"            pm.expect(1).to.be.greaterThan(0);\r",
+							"        });\r",
+							"}  \r",
+							"if(res_str.hasOwnProperty(\"password\")) {\r",
+							"        \r",
+							"        pm.test(\"Hay un campo password\", function () {\r",
+							"            pm.expect(1).to.be.greaterThan(0);\r",
+							"        });\r",
+							"}\r",
+							"if(res_str.hasOwnProperty(\"telefono\")) {\r",
+							"        \r",
+							"        pm.test(\"Hay un campo telefono\", function () {\r",
+							"            pm.expect(1).to.be.greaterThan(0);\r",
+							"        });\r",
+							"}"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
 			"request": {
 				"method": "GET",
 				"header": [
@@ -128,22 +422,67 @@
 						"type": "text"
 					}
 				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
 				"url": {
-					"raw": "http://localhost:8080/obtenerTodasLasMediciones",
-					"protocol": "http",
+					"raw": "{{base_url}}/loginUsuario?mail=sergisise@gmail.com&pass=1234",
 					"host": [
-						"localhost"
+						"{{base_url}}"
 					],
-					"port": "8080",
 					"path": [
-						"obtenerTodasLasMediciones"
+						"loginUsuario"
+					],
+					"query": [
+						{
+							"key": "mail",
+							"value": "sergisise@gmail.com"
+						},
+						{
+							"key": "pass",
+							"value": "1234"
+						}
 					]
 				}
 			},
 			"response": []
 		},
 		{
-			"name": "GuardarMedicion",
+			"name": "CrearUsuario",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"\r",
+							"\r",
+							"\r",
+							"pm.test(\"La respuesta de la peticion es 200\", function () { \r",
+							"    \r",
+							"     pm.response.to.be.ok; // equivalente a decir que valide que sea 200\r",
+							"     \r",
+							"});\r",
+							"// Pedimos a nuestro response payload que tengo Content-Type en el header\r",
+							"pm.test(\"El header de Content-Type esta presente\", function () {\r",
+							"    pm.response.to.have.header(\"Content-Type\");\r",
+							"});\r",
+							"//console.log(\"Resultado de la peticion, si es 1 se ha creado correctamente, si es -1 significa que existe un usuario con ese correo en la base de datos\")\r",
+							"//console.log(pm.response)\r",
+							"\r",
+							"pm.test(\"La peticion tiene cuerpo\",function(){\r",
+							"    pm.expect(!pm.request.body.isEmpty)\r",
+							"})\r",
+							"\r",
+							"pm.test(\"La peticion utiliza el metodo  POST\",function(){\r",
+							"    pm.expect(pm.request.method == \"POST\")\r",
+							"})\r",
+							"//console.log(pm.request.body)"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
 			"request": {
 				"method": "POST",
 				"header": [
@@ -155,17 +494,74 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n \"mediciones\": [\r\n {\r\n \"medicion\": 25545.25,\r\n \"fecha\": \"2021/10/16\",\r\n \"hora\":\"15:15\",\r\n \"localizacion_lat\": 17.1,\r\n \"localizacion_lon\": 15.2,\r\n \"id\": 1\r\n },\r\n {\r\n \"medicion\": 58.25,\r\n \"fecha\": \"2021/10/16\",\r\n \"hora\": \"16:24\",\r\n \"localizacion_lat\": 17.1,\r\n \"localizacion_lon\": 15.2,\r\n \"id\": 5\r\n }\r\n ]\r\n}"
+					"raw": "{\"mail\":\"angle.com\",\"nombre\":\"Sergi\",\"apellidos\":\"Sirvent\",\"isAutobusero\":\"False\",\"edad\":20,\"matricula\":\"12345\",\"telefono\":\"699699988\",\"password\":\"1234\"}"
 				},
 				"url": {
-					"raw": "http://localhost:8080/insertMedicionJson",
-					"protocol": "http",
+					"raw": "{{base_url}}/crearUsuario",
 					"host": [
-						"localhost"
+						"{{base_url}}"
 					],
-					"port": "8080",
 					"path": [
-						"insertMedicionJson"
+						"crearUsuario"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "EditarUsuario",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"La respuesta de la peticion es 200\", function () { \r",
+							"    \r",
+							"     pm.response.to.be.ok; // equivalente a decir que valide que sea 200\r",
+							"     \r",
+							"});\r",
+							"// Pedimos a nuestro response payload que tengo Content-Type en el header\r",
+							"pm.test(\"El header de Content-Type esta presente\", function () {\r",
+							"    pm.response.to.have.header(\"Content-Type\");\r",
+							"});\r",
+							"\r",
+							"//comprobamos que hay un body raw en la peticion\r",
+							"pm.test(\"El cuerpo de la petición tiene un body raw\",function(){\r",
+							"    pm.expect(pm.request.body.raw != \"\")\r",
+							"})\r",
+							"//console.log(pm.request.body.raw)\r",
+							"\r",
+							"//comprobamos que el metodo de la peticion es PUT\r",
+							"pm.test(\"El metodo de la peticion es PUT\",function(){\r",
+							"    pm.expect(pm.request.method == \"PUT\")\r",
+							"})\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"id_usuario\":1,\"mail\":\"testCrear@gmail.com\",\"nombre\":\"test\",\"apellidos\":\"crear\",\"isAutobusero\":\"False\",\"edad\":54,\"matricula\":\"12345\",\"telefono\":\"699699988\",\"password\":\"2323\"}"
+				},
+				"url": {
+					"raw": "{{base_url}}/editarUsuario",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"editarUsuario"
 					]
 				}
 			},

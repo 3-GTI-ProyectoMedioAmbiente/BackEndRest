@@ -156,11 +156,18 @@ class LogicaNegocio:
     ##  Json -> crearUsuario -> Z
     ##/
     def crearUsuario(self,usuario):
-        data = self.db.queryStatement("SELECT * FROM `usuario` WHERE mail LIKE '{}' AND password LIKE '{}'".format(usuario["mail"],usuario["password"]))
+        data = self.db.queryStatement("SELECT * FROM `usuario` WHERE mail LIKE '{}'".format(usuario["mail"]))
         if(len(data) == 0):
-
-            statement = "INSERT INTO `usuario` (mail,nombre,apellidos,isAutobusero,edad,matricula,telefono,password) VALUES ('{}','{}','{}','{}','{}','{}','{}','{}');".format(
-            usuario['mail'],usuario['nombre'],usuario['apellidos'],usuario['isAutobusero'], usuario['edad'], usuario['matricula'], usuario['telefono'], usuario['password'] )
+            print(usuario)
+            
+            if(usuario['isAutobusero'] == True):
+                statement = "INSERT INTO `usuario` (mail,nombre,apellidos,isAutobusero,edad,matricula,telefono,password) VALUES ('{}','{}','{}','{}','{}','{}','{}','{}');".format(
+            usuario['mail'],usuario['nombre'],usuario['apellidos'],1, usuario['edad'], usuario['matricula'], usuario['telefono'], usuario['password'] )
+            else:
+                statement = "INSERT INTO `usuario` (mail,nombre,apellidos,isAutobusero,edad,matricula,telefono,password) VALUES ('{}','{}','{}','{}','{}','{}','{}','{}');".format(
+            usuario['mail'],usuario['nombre'],usuario['apellidos'],0, usuario['edad'], usuario['matricula'], usuario['telefono'], usuario['password'] )
+            
+            
             resTMP = self.db.insertStatement(statement)
 
             return 1
@@ -177,8 +184,8 @@ class LogicaNegocio:
     ##/  
 
     def editarUsuario(self,usuario):
-        statement = "UPDATE `usuario` SET `mail`='{}',`nombre`='{}',`apellidos`='{}',`isAutobusero`='{}',`edad`='{}',`matricula`='{}',`telefono`='{}',`password`='{}' WHERE `id_usuario` = '{}' ".format(
-            usuario['mail'],usuario['nombre'],usuario['apellidos'],usuario['isAutobusero'], usuario['edad'], usuario['matricula'], usuario['telefono'], usuario['password'],usuario['id_usuario'])
+        statement = "UPDATE `usuario` SET `nombre`='{}',`mail`='{}',`apellidos`='{}',`edad`='{}',`telefono`='{}',`password`='{}' WHERE `id_usuario` = '{}' ".format(
+            usuario['nombre'],usuario['mail'],usuario['apellidos'], usuario['edad'], usuario['telefono'], usuario['password'],usuario['id_usuario'])
         resTMP = self.db.insertStatement(statement)
         return 1
     

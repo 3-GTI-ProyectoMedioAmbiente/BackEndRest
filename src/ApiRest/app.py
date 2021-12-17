@@ -1,6 +1,6 @@
 from flask import Flask,request
 from logica.logicaNegocio import LogicaNegocio
-from flask_cors import CORS
+from flask_cors import CORS,cross_origin
 import json
 
 
@@ -101,15 +101,18 @@ def loginUsuario():
 ## Peticion que crea un usuario para la base de datos
 ## @param Usuario: Objeto Json que contiene los datos del usuario
 ## Usuario -> crearUsuario -> Z
-## @return HTML: html que contiene el resultado obtenido en la insercion exito=1, fallo=-1
+## @return Z: entero que indica el resultado de la operacion exito=1, fallo=-1
 ##/
 @app.route('/crearUsuario', methods=['POST'])
+@cross_origin()
 def crearUsuario():
     data = request.get_json()
-    #print(data)
+    print("-----------------------------------------")
+    print(data)
+    print("-----------------------------------------")
     res = logicaNegocio.crearUsuario(data)
     
-    return '''<h1>Resultado:  {} </h1>'''.format(res)
+    return '{}'.format(res)
 
 ##/
 ## http://{ip_server}/editarUsuario
@@ -119,12 +122,13 @@ def crearUsuario():
 ## @return: Entero que indica si todo ha ido bien o no
 ##/
 @app.route('/editarUsuario', methods=['PUT'])
+@cross_origin()
 def editarUsuario():
     data = request.get_json()
     #print(data)
     res = logicaNegocio.editarUsuario(data)
     
-    return '''<h1>Resultado:  {} </h1>'''.format(res)
+    return '{}'.format(res)
 
 ## Inicializacion del servidor
 if __name__=='__main__':
