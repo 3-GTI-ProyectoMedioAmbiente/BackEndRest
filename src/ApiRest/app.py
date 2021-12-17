@@ -93,7 +93,6 @@ def loginUsuario():
     contrasenya = request.args.get('pass')
     #print(data)
     res = logicaNegocio.loginUsuario(mail,contrasenya)
-    
     return res
 
 ##/
