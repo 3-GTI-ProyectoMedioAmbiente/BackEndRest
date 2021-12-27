@@ -129,6 +129,23 @@ def editarUsuario():
     
     return '{}'.format(res)
 
+
+
+
+##/
+## http://{ip_server}/obtenerIdSensorMedianteMac
+## Peticion que permite obtener el id del sensor a aprtir de la mac del mismo
+## @param mac texto que contiene la mac del sensor
+## texto -> obtenerIdSensorMedianteMac -> Z
+## @return: Entero que indica la id del sensor (SI AUN NO ESTA VINCULADO)
+##/
+@app.route('/obtenerIdSensorMedianteMac', methods=['GET'])
+@cross_origin()
+def obtenerIdSensorMedianteMac():
+    mac = request.args.get('mac')
+    res = logicaNegocio.obtenerIdSensorMedianteMac(mac)
+    return res
+
 ## Inicializacion del servidor
 if __name__=='__main__':
         app.run(host='0.0.0.0', debug=True)
