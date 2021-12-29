@@ -140,7 +140,7 @@ class LogicaNegocio:
             
             print(data)
             
-            usuario = Usuario(data[0][0],data[0][1],data[0][2],data[0][3],data[0][4],data[0][5],data[0][6],data[0][7],data[0][8],data[0][9]).toJson()
+            usuario = Usuario(data[0][0],data[0][1],data[0][2],data[0][3],data[0][4],data[0][5].strftime('%Y-%m-%d'),data[0][6],data[0][7],data[0][8],data[0][9]).toJson()
             res = []
             res.append(usuario)
             
