@@ -136,11 +136,11 @@ class LogicaNegocio:
             return "-1"
         else:
             for row in data:
-                print("data ---> ")
+                print("dataLOgin ---> ")
             
-            #print(data)
+            print(data)
             
-            usuario = Usuario(data[0][0],data[0][1],data[0][2],data[0][3],data[0][4],data[0][5],data[0][6],data[0][7],data[0][8]).toJson()
+            usuario = Usuario(data[0][0],data[0][1],data[0][2],data[0][3],data[0][4],data[0][8].strftime('%Y-%m-%d'),data[0][5],data[0][6],data[0][7]).toJson()
             res = []
             res.append(usuario)
             
@@ -161,11 +161,11 @@ class LogicaNegocio:
             print(usuario)
             
             if(usuario['isAutobusero'] == True):
-                statement = "INSERT INTO `usuario` (mail,nombre,apellidos,isAutobusero,edad,matricula,telefono,password) VALUES ('{}','{}','{}','{}','{}','{}','{}','{}');".format(
-            usuario['mail'],usuario['nombre'],usuario['apellidos'],1, usuario['edad'], usuario['matricula'], usuario['telefono'], usuario['password'] )
+                statement = "INSERT INTO `usuario` (mail,nombre,apellidos,isAutobusero,fechaNacimiento,matricula,telefono,password) VALUES ('{}','{}','{}','{}','{}','{}','{}','{}');".format(
+            usuario['mail'],usuario['nombre'],usuario['apellidos'],1, usuario['fechaNacimiento'], usuario['matricula'], usuario['telefono'], usuario['password'] )
             else:
-                statement = "INSERT INTO `usuario` (mail,nombre,apellidos,isAutobusero,edad,matricula,telefono,password) VALUES ('{}','{}','{}','{}','{}','{}','{}','{}');".format(
-            usuario['mail'],usuario['nombre'],usuario['apellidos'],0, usuario['edad'], usuario['matricula'], usuario['telefono'], usuario['password'] )
+                statement = "INSERT INTO `usuario` (mail,nombre,apellidos,isAutobusero,fechaNacimiento,matricula,telefono,password) VALUES ('{}','{}','{}','{}','{}','{}','{}','{}');".format(
+            usuario['mail'],usuario['nombre'],usuario['apellidos'],0, usuario['fechaNacimiento'], usuario['matricula'], usuario['telefono'], usuario['password'] )
             
             
             resTMP = self.db.insertStatement(statement)
@@ -184,8 +184,8 @@ class LogicaNegocio:
     ##/  
 
     def editarUsuario(self,usuario):
-        statement = "UPDATE `usuario` SET `nombre`='{}',`mail`='{}',`apellidos`='{}',`edad`='{}',`telefono`='{}',`password`='{}' WHERE `id_usuario` = '{}' ".format(
-            usuario['nombre'],usuario['mail'],usuario['apellidos'], usuario['edad'], usuario['telefono'], usuario['password'],usuario['id_usuario'])
+        statement = "UPDATE `usuario` SET `nombre`='{}',`mail`='{}',`apellidos`='{}',`fechaNacimiento`='{}',`telefono`='{}',`password`='{}' WHERE `id_usuario` = '{}' ".format(
+            usuario['nombre'],usuario['mail'],usuario['apellidos'], usuario['fechaNacimiento'], usuario['telefono'], usuario['password'],usuario['id_usuario'])
         resTMP = self.db.insertStatement(statement)
         return 1
     
