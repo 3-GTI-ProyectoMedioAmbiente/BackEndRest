@@ -185,9 +185,14 @@ class LogicaNegocio:
     ##/  
 
     def editarUsuario(self,usuario):
-        statement = "UPDATE `usuario` SET `nombre`='{}',`mail`='{}',`apellidos`='{}',`edad`='{}',`telefono`='{}',`password`='{}',`id_sensor`='{}' WHERE `id_usuario` = '{}' ".format(
+
+        if(usuario['id_sensor']=='null'):
+           statement = "UPDATE `usuario` SET `nombre`='{}',`mail`='{}',`apellidos`='{}',`fechaNacimiento`='{}',`telefono`='{}',`password`='{}' WHERE `id_usuario` = '{}' ".format(
+            usuario['nombre'],usuario['mail'],usuario['apellidos'], usuario['fechaNacimiento'], usuario['telefono'], usuario['password'],usuario['id_usuario'])
+        else:
+            statement = "UPDATE `usuario` SET `nombre`='{}',`mail`='{}',`apellidos`='{}',`fechaNacimiento`='{}',`telefono`='{}',`password`='{}',`id_sensor`='{}' WHERE `id_usuario` = '{}' ".format(
             usuario['nombre'],usuario['mail'],usuario['apellidos'], usuario['fechaNacimiento'], usuario['telefono'], usuario['password'],usuario['id_sensor'],usuario['id_usuario'])
-        resTMP = self.db.insertStatement(statement)
+        self.db.insertStatement(statement)
         return 1
 
     
