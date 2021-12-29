@@ -14,7 +14,7 @@ class Usuario:
     ## @return json: Objeto Json que tendra el objeto Usuario en formato JSON
     ## toJson()->json
     ##/
-    def __init__(self,id,mail,nombre,apellidos,isAutobusero,fechaNacimiento,matricula,telefono,password):
+    def __init__(self,id,mail,nombre,apellidos,isAutobusero,edad,matricula,telefono,password,id_sensor):
         self.id = id
         self.mail = mail
         self.nombre = nombre
@@ -24,6 +24,7 @@ class Usuario:
         self.matricula = matricula
         self.telefono = telefono
         self.password = password
+        self.id_sensor = id_sensor
     
     ##/
     ##toJson()
@@ -42,7 +43,8 @@ class Usuario:
             "fechaNacimiento": self.fechaNacimiento,
             "matricula": self.matricula,
             "telefono": self.telefono,
-            "password": self.password
+            "password": self.password,
+            "id_sensor":self.id_sensor
             }
         return json
 

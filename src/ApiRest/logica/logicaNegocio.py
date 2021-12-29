@@ -140,12 +140,13 @@ class LogicaNegocio:
             
             print(data)
             
-            usuario = Usuario(data[0][0],data[0][1],data[0][2],data[0][3],data[0][4],data[0][8].strftime('%Y-%m-%d'),data[0][5],data[0][6],data[0][7]).toJson()
+            usuario = Usuario(data[0][0],data[0][1],data[0][2],data[0][3],data[0][4],data[0][5],data[0][6],data[0][7],data[0][8],data[0][9]).toJson()
             res = []
             res.append(usuario)
             
             #print(res[0]['mail'])
             return res[0]
+
 
     ##/
     ## crearUsuario()
@@ -184,8 +185,23 @@ class LogicaNegocio:
     ##/  
 
     def editarUsuario(self,usuario):
-        statement = "UPDATE `usuario` SET `nombre`='{}',`mail`='{}',`apellidos`='{}',`fechaNacimiento`='{}',`telefono`='{}',`password`='{}' WHERE `id_usuario` = '{}' ".format(
-            usuario['nombre'],usuario['mail'],usuario['apellidos'], usuario['fechaNacimiento'], usuario['telefono'], usuario['password'],usuario['id_usuario'])
+        statement = "UPDATE `usuario` SET `nombre`='{}',`mail`='{}',`apellidos`='{}',`edad`='{}',`telefono`='{}',`password`='{}',`id_sensor`='{}' WHERE `id_usuario` = '{}' ".format(
+            usuario['nombre'],usuario['mail'],usuario['apellidos'], usuario['fechaNacimiento'], usuario['telefono'], usuario['password'],usuario['id_sensor'],usuario['id_usuario'])
         resTMP = self.db.insertStatement(statement)
         return 1
+
+    
+    
+    ## Peticion que permite obtener el id del sensor a aprtir de la mac del mismo
+    ## @param mac texto que contiene la mac del sensor
+    ## texto -> obtenerIdSensorMedianteMac -> Z
+    ## @return: Entero que indica la id del sensor (SI AUN NO ESTA VINCULADO)
+    ##/
+    def obtenerIdSensorMedianteMac(self,mac):
+        data = self.db.queryStatement("SELECT s.id_sensor,s.direccion_mac FROM sensor s where NOT EXISTS(Select * from usuario u INNER JOIN sensor s on s.id_sensor = u.id_sensor where s.direccion_mac = '{}') and s.direccion_mac='{}'".format(mac,mac))
+        if(len(data) == 0):
+            return "-1"
+        else:
+            res = str(data[0][0])
+            return res
     
