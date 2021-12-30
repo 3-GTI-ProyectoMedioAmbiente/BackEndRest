@@ -210,3 +210,14 @@ class LogicaNegocio:
             res = str(data[0][0])
             return res
     
+    ## Peticion que permite publicar la informacion de la sesion del usuario en la tabla de datos privada
+    ## @param jsonInfo- Objeto json con la informacion necesaria
+    ## json -> publicarInfoPrivada -> Z
+    ## @return: Entero que indica si la operacion ha ido bien
+    ##/
+    def publicarInfoPrivada(self,info):
+        statement = "INSERT INTO `info_privada` (id_usuario,id_sensor,telefono,distancia_recorrida,nombre,minutos_activo) VALUES ('{}','{}','{}','{}','{}','{}');".format(
+                    info["id_usuario"],info["id_sensor"],info["telefono"],info["distancia_recorrida"],info["nombre"],info["minutos_activo"])
+
+        self.db.insertStatement(statement)
+        return 1

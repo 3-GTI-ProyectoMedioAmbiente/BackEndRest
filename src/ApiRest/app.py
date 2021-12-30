@@ -70,7 +70,8 @@ def obtenerMedicionesUltimas24h():
 ## @return json: JSON que contendra las ultimas mediciones 
 ## getLastMeasures-> [Medicion]
 ##/
-@app.route('/obtenerMedicionesConPeriodoPorUsuario')
+@app.route('/obtenerMedicionesConPeriodoPorUsuario', methods=['GET'])
+@cross_origin()
 def obtenerMedicionesConPeriodoPorUsuario():
     periodo = request.args.get('periodo')
     idUsuario = request.args.get('idUsuario')
@@ -124,7 +125,8 @@ def crearUsuario():
 @cross_origin()
 def editarUsuario():
     data = request.get_json()
-    #print(data)
+    print("Data del editar usuario en app.py")
+    print(data)
     res = logicaNegocio.editarUsuario(data)
     
     return '{}'.format(res)
@@ -145,6 +147,26 @@ def obtenerIdSensorMedianteMac():
     mac = request.args.get('mac')
     res = logicaNegocio.obtenerIdSensorMedianteMac(mac)
     return res
+
+
+##/
+## http://{ip_server}/publicarInfoPrivada
+## Peticion qeu publica en la tabla privada la informacion del usuario
+## @param jsonInfo
+## json -> publicarInfoPrivada -> Z
+## @return: Entero que indica si el proceso ha ido bien 
+##/
+@app.route('/publicarInfoPrivada', methods=['POST'])
+@cross_origin()
+def publicarInfoPrivada():
+    data = request.get_json()
+    print("-Publicar info----------------------------------------")
+    print(data)
+    print("-----------------------------------------")
+    res = logicaNegocio.publicarInfoPrivada(data)
+    
+    return '{}'.format(res)
+
 
 ## Inicializacion del servidor
 if __name__=='__main__':
