@@ -6,6 +6,66 @@
 	},
 	"item": [
 		{
+			"name": "CrearUsuario",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"\r",
+							"\r",
+							"\r",
+							"pm.test(\"La respuesta de la peticion es 200\", function () { \r",
+							"    \r",
+							"     pm.response.to.be.ok; // equivalente a decir que valide que sea 200\r",
+							"     \r",
+							"});\r",
+							"// Pedimos a nuestro response payload que tengo Content-Type en el header\r",
+							"pm.test(\"El header de Content-Type esta presente\", function () {\r",
+							"    pm.response.to.have.header(\"Content-Type\");\r",
+							"});\r",
+							"//console.log(\"Resultado de la peticion, si es 1 se ha creado correctamente, si es -1 significa que existe un usuario con ese correo en la base de datos\")\r",
+							"//console.log(pm.response)\r",
+							"\r",
+							"pm.test(\"La peticion tiene cuerpo\",function(){\r",
+							"    pm.expect(!pm.request.body.isEmpty)\r",
+							"})\r",
+							"\r",
+							"pm.test(\"La peticion utiliza el metodo  POST\",function(){\r",
+							"    pm.expect(pm.request.method == \"POST\")\r",
+							"})\r",
+							"//console.log(pm.request.body)"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"mail\":\"prueba123\",\"nombre\":\"Sergi\",\"apellidos\":\"Sirvent\",\"isAutobusero\":\"True\",\"fechaNacimiento\":\"2002-02-25\",\"matricula\":\"12345\",\"telefono\":\"699699988\",\"password\":\"1234\"}"
+				},
+				"url": {
+					"raw": "{{base_url}}/crearUsuario",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"crearUsuario"
+					]
+				}
+			},
+			"response": []
+		},
+		{
 			"name": "Ultimas Mediciones",
 			"event": [
 				{
@@ -186,7 +246,10 @@
 							"// Pedimos a nuestro response payload que tengo Content-Type en el header\r",
 							"pm.test(\"El header de Content-Type esta presente\", function () {\r",
 							"    pm.response.to.have.header(\"Content-Type\");\r",
-							"});"
+							"});\r",
+							"pm.test(\"La peticion utiliza el metodo  POST\",function(){\r",
+							"    pm.expect(pm.request.method == \"POST\")\r",
+							"})"
 						],
 						"type": "text/javascript"
 					}
@@ -207,7 +270,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n \"mediciones\": [\r\n {\r\n \"medicion\": 25545.25,\r\n \"fecha\": \"2021/10/16\",\r\n \"hora\":\"15:00\",\r\n \"localizacion_lat\": 17.1,\r\n \"localizacion_lon\": 15.2\r\n },\r\n {\r\n \"medicion\": 58.25,\r\n \"fecha\": \"2021/10/16\",\r\n \"hora\": \"16:00\",\r\n \"localizacion_lat\": 17.1,\r\n \"localizacion_lon\": 15.2\r\n }\r\n ]\r\n}"
+					"raw": "{\r\n \"mediciones\": [\r\n {\r\n \"medicion\": 25545.25,\r\n \"fecha\": \"2021/12/30\",\r\n \"hora\":\"15:00\",\r\n \"localizacion_lat\": 17.1,\r\n \"localizacion_lon\": 15.2,\r\n \"id_sensor\":1,\r\n \"id_tipoMedicion\":4\r\n },\r\n {\r\n\"medicion\": 25545.25,\r\n \"fecha\": \"2021/12/30\",\r\n \"hora\":\"15:00\",\r\n \"localizacion_lat\": 17.2,\r\n \"localizacion_lon\": 15.3,\r\n \"id_sensor\":1,\r\n \"id_tipoMedicion\":4\r\n }\r\n ]\r\n}"
 				},
 				"url": {
 					"raw": "{{base_url}}/insertMedicionJson",
@@ -307,7 +370,7 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "{{base_url}}/obtenerMedicionesConPeriodoPorUsuario?periodo=mes&idUsuario=1",
+					"raw": "{{base_url}}/obtenerMedicionesConPeriodoPorUsuario?periodo=dia&idUsuario=1",
 					"host": [
 						"{{base_url}}"
 					],
@@ -317,12 +380,123 @@
 					"query": [
 						{
 							"key": "periodo",
-							"value": "mes"
+							"value": "dia"
 						},
 						{
 							"key": "idUsuario",
 							"value": "1"
 						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "EditarUsuario",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"La respuesta de la peticion es 200\", function () { \r",
+							"    \r",
+							"     pm.response.to.be.ok; // equivalente a decir que valide que sea 200\r",
+							"     \r",
+							"});\r",
+							"// Pedimos a nuestro response payload que tengo Content-Type en el header\r",
+							"pm.test(\"El header de Content-Type esta presente\", function () {\r",
+							"    pm.response.to.have.header(\"Content-Type\");\r",
+							"});\r",
+							"\r",
+							"//comprobamos que hay un body raw en la peticion\r",
+							"pm.test(\"El cuerpo de la petición tiene un body raw\",function(){\r",
+							"    pm.expect(pm.request.body.raw != \"\")\r",
+							"})\r",
+							"//console.log(pm.request.body.raw)\r",
+							"\r",
+							"//comprobamos que el metodo de la peticion es PUT\r",
+							"pm.test(\"El metodo de la peticion es PUT\",function(){\r",
+							"    pm.expect(pm.request.method == \"PUT\")\r",
+							"})\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"id_usuario\":1,\"id_sensor\":1,\"mail\":\"testCrear@gmail.com\",\"nombre\":\"test2\",\"apellidos\":\"crear\",\"isAutobusero\":\"False\",\"fechaNacimiento\":\"2002-25-25\",\"matricula\":\"12345\",\"telefono\":\"699699988\",\"password\":\"2323\"}"
+				},
+				"url": {
+					"raw": "{{base_url}}/editarUsuario",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"editarUsuario"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "PublicarInfoPrivada",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"La respuesta de la peticion es 200\", function () { \r",
+							"    \r",
+							"     pm.response.to.be.ok; // equivalente a decir que valide que sea 200\r",
+							"     \r",
+							"});\r",
+							"// Pedimos a nuestro response payload que tengo Content-Type en el header\r",
+							"pm.test(\"El header de Content-Type esta presente\", function () {\r",
+							"    pm.response.to.have.header(\"Content-Type\");\r",
+							"});\r",
+							"pm.test(\"La peticion tiene cuerpo\",function(){\r",
+							"    pm.expect(!pm.request.body.isEmpty)\r",
+							"})\r",
+							"pm.test(\"La peticion utiliza el metodo  POST\",function(){\r",
+							"    pm.expect(pm.request.method == \"POST\")\r",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"id_usuario\":23,\"id_sensor\":1,\"telefono\":\"23\",\"distancia_recorrida\":54,\"nombre\":\"Sergi\",\"minutos_activo\":\"23\"}"
+				},
+				"url": {
+					"raw": "{{base_url}}/publicarInfoPrivada",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"publicarInfoPrivada"
 					]
 				}
 			},
@@ -427,7 +601,7 @@
 					"raw": ""
 				},
 				"url": {
-					"raw": "{{base_url}}/loginUsuario?mail=sergisise@gmail.com&pass=1234",
+					"raw": "{{base_url}}/loginUsuario?mail=alberto@gmail.com&pass=123",
 					"host": [
 						"{{base_url}}"
 					],
@@ -437,131 +611,12 @@
 					"query": [
 						{
 							"key": "mail",
-							"value": "sergisise@gmail.com"
+							"value": "alberto@gmail.com"
 						},
 						{
 							"key": "pass",
-							"value": "1234"
+							"value": "123"
 						}
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "CrearUsuario",
-			"event": [
-				{
-					"listen": "test",
-					"script": {
-						"exec": [
-							"\r",
-							"\r",
-							"\r",
-							"pm.test(\"La respuesta de la peticion es 200\", function () { \r",
-							"    \r",
-							"     pm.response.to.be.ok; // equivalente a decir que valide que sea 200\r",
-							"     \r",
-							"});\r",
-							"// Pedimos a nuestro response payload que tengo Content-Type en el header\r",
-							"pm.test(\"El header de Content-Type esta presente\", function () {\r",
-							"    pm.response.to.have.header(\"Content-Type\");\r",
-							"});\r",
-							"//console.log(\"Resultado de la peticion, si es 1 se ha creado correctamente, si es -1 significa que existe un usuario con ese correo en la base de datos\")\r",
-							"//console.log(pm.response)\r",
-							"\r",
-							"pm.test(\"La peticion tiene cuerpo\",function(){\r",
-							"    pm.expect(!pm.request.body.isEmpty)\r",
-							"})\r",
-							"\r",
-							"pm.test(\"La peticion utiliza el metodo  POST\",function(){\r",
-							"    pm.expect(pm.request.method == \"POST\")\r",
-							"})\r",
-							"//console.log(pm.request.body)"
-						],
-						"type": "text/javascript"
-					}
-				}
-			],
-			"request": {
-				"method": "POST",
-				"header": [
-					{
-						"key": "Content-Type",
-						"value": "application/json",
-						"type": "text"
-					}
-				],
-				"body": {
-					"mode": "raw",
-					"raw": "{\"mail\":\"angle.com\",\"nombre\":\"Sergi\",\"apellidos\":\"Sirvent\",\"isAutobusero\":\"False\",\"edad\":20,\"matricula\":\"12345\",\"telefono\":\"699699988\",\"password\":\"1234\"}"
-				},
-				"url": {
-					"raw": "{{base_url}}/crearUsuario",
-					"host": [
-						"{{base_url}}"
-					],
-					"path": [
-						"crearUsuario"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "EditarUsuario",
-			"event": [
-				{
-					"listen": "test",
-					"script": {
-						"exec": [
-							"pm.test(\"La respuesta de la peticion es 200\", function () { \r",
-							"    \r",
-							"     pm.response.to.be.ok; // equivalente a decir que valide que sea 200\r",
-							"     \r",
-							"});\r",
-							"// Pedimos a nuestro response payload que tengo Content-Type en el header\r",
-							"pm.test(\"El header de Content-Type esta presente\", function () {\r",
-							"    pm.response.to.have.header(\"Content-Type\");\r",
-							"});\r",
-							"\r",
-							"//comprobamos que hay un body raw en la peticion\r",
-							"pm.test(\"El cuerpo de la petición tiene un body raw\",function(){\r",
-							"    pm.expect(pm.request.body.raw != \"\")\r",
-							"})\r",
-							"//console.log(pm.request.body.raw)\r",
-							"\r",
-							"//comprobamos que el metodo de la peticion es PUT\r",
-							"pm.test(\"El metodo de la peticion es PUT\",function(){\r",
-							"    pm.expect(pm.request.method == \"PUT\")\r",
-							"})\r",
-							"\r",
-							""
-						],
-						"type": "text/javascript"
-					}
-				}
-			],
-			"request": {
-				"method": "PUT",
-				"header": [
-					{
-						"key": "Content-Type",
-						"value": "application/json",
-						"type": "text"
-					}
-				],
-				"body": {
-					"mode": "raw",
-					"raw": "{\"id_usuario\":1,\"mail\":\"testCrear@gmail.com\",\"nombre\":\"test\",\"apellidos\":\"crear\",\"isAutobusero\":\"False\",\"edad\":54,\"matricula\":\"12345\",\"telefono\":\"699699988\",\"password\":\"2323\"}"
-				},
-				"url": {
-					"raw": "{{base_url}}/editarUsuario",
-					"host": [
-						"{{base_url}}"
-					],
-					"path": [
-						"editarUsuario"
 					]
 				}
 			},
