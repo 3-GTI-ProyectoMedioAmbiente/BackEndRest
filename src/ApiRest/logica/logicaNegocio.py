@@ -221,3 +221,22 @@ class LogicaNegocio:
 
         self.db.insertStatement(statement)
         return 1
+
+
+
+    ##/
+    ## Metodo que preapra la sentencia SQL para obtener las mediciones de un perido concrecto por usuario
+    ## @param self: objeto que contiene los propios metodos y atributos de la clase
+    ## @param periodo: perido del que se quieren coger las medidas
+    ## @param idUsuario: Id del usuario del que se sacaran las medidas
+    ## @return res: json con formateado que contendra las mediciones segun el parametro recibido
+    ## N->obtenerLasUltimasMediciones->[medicion]
+    ##/
+    def obtenerMedicionesGlobalesFecha(self, fecha):
+        fecha.replace('/','-')
+        data = self.db.queryStatement(
+            "SELECT m.id, m.medicion, m.fecha, m.hora, m.localizacion_lat, m.localizacion_lon, m.id_sensor, m.id_tipoMedicion "
+            +"FROM mediciones m "
+            +"WHERE fecha='{}'".format(fecha))
+
+        return self.devolverMediciones(data)

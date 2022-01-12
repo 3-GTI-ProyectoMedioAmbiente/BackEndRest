@@ -79,6 +79,14 @@ def obtenerMedicionesConPeriodoPorUsuario():
     return json.dumps(data,indent=4)
 
 
+@app.route('/obtenerMedicionesGlobalesFecha', methods=['GET'])
+@cross_origin()
+def obtenerMedicionesGlobalesFecha():
+    fecha = request.args.get('fecha')
+    data = logicaNegocio.obtenerMedicionesGlobalesFecha(fecha)
+    return json.dumps(data,indent=4)
+
+
 
 ##/
 ## http://{ip_server}/loginUsuario
