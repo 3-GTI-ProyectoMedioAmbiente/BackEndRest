@@ -14,7 +14,7 @@ app = Flask(__name__)
 app.config['MYSQL_HOST']='localhost'
 app.config['MYSQL_USER']='root'
 app.config['MYSQL_PASSWORD']=''
-app.config['MYSQL_DB']='db_mediciones_prueba'
+app.config['MYSQL_DB']='db_mediciones'
 CORS(app)
 logicaNegocio = LogicaNegocio(app)
 ##/
@@ -175,6 +175,24 @@ def publicarInfoPrivada():
     
     return '{}'.format(res)
 
+##/
+## http://{ip_server}/publicarRegistroNodo
+## Peticion que publica un registro del nodo con su estdao
+## @param jsonInfo
+## json -> publicarInfoPrivada -> Z
+## @return: Entero que indica si el proceso ha ido bien 
+##/
+@app.route('/publicarRegistroNodo', methods=['POST'])
+@cross_origin()
+def publicarRegistroNodo():
+    
+    data = request.get_json()
+    print("-Publicar registro----------------------------------------")
+    print(data)
+    print("-----------------------------------------")
+    res = logicaNegocio.publicarRegistroNodo(data)
+    
+    return '{}'.format(res)
 
 ## Inicializacion del servidor
 if __name__=='__main__':

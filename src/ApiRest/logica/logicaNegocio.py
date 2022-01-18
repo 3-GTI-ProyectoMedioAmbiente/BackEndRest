@@ -240,3 +240,14 @@ class LogicaNegocio:
             +"WHERE fecha='{}'".format(fecha))
 
         return self.devolverMediciones(data)
+
+
+    ##/
+    ##/
+    def publicarRegistroNodo(self, info):
+        
+        statement = "INSERT INTO `registros_estado_nodo` (id_sensor,fecha,estado,hora) VALUES ('{}','{}','{}','{}');".format(
+                    info["id_sensor"],info["fecha"],info["estado"],info["hora"])
+
+        self.db.insertStatement(statement)
+        return 1
