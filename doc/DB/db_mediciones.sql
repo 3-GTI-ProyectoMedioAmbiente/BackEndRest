@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 30-12-2021 a las 14:33:04
--- Versión del servidor: 10.4.21-MariaDB
--- Versión de PHP: 8.0.10
+-- Tiempo de generación: 18-01-2022 a las 18:46:53
+-- Versión del servidor: 10.4.22-MariaDB
+-- Versión de PHP: 7.3.33
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -91,7 +91,38 @@ INSERT INTO `mediciones` (`id`, `medicion`, `fecha`, `hora`, `localizacion_lat`,
 (1794, 25545.2, '2021-12-30', '15:00:00', 17.1, 15.2, 2, 4),
 (1795, 25545.2, '2021-12-30', '15:00:00', 17.2, 15.3, 2, 4),
 (1796, 25545.2, '2021-12-30', '15:00:00', 17.1, 15.2, 1, 4),
-(1797, 25545.2, '2021-12-30', '15:00:00', 17.2, 15.3, 1, 4);
+(1797, 25545.2, '2021-12-30', '15:00:00', 17.2, 15.3, 1, 4),
+(1798, 4322, '2022-01-18', '18:34:25', 38.997, -0.166342, 1, 3),
+(1799, 4498, '2022-01-18', '18:34:29', 38.997, -0.166342, 1, 3),
+(1800, 4274, '2022-01-18', '18:34:33', 38.997, -0.166342, 1, 3),
+(1801, 4241, '2022-01-18', '18:34:37', 38.997, -0.166342, 1, 3),
+(1802, 4233, '2022-01-18', '18:34:45', 38.997, -0.166342, 1, 3),
+(1803, 4261, '2022-01-18', '18:34:50', 38.997, -0.166342, 1, 3),
+(1804, 4211, '2022-01-18', '18:34:54', 38.997, -0.166342, 1, 3),
+(1805, 4100, '2022-01-18', '18:36:36', 38.997, -0.166342, 1, 3),
+(1806, 4361, '2022-01-18', '18:36:40', 38.997, -0.166342, 1, 3),
+(1807, 4133, '2022-01-18', '18:36:49', 38.997, -0.166342, 1, 3),
+(1808, 3852, '2022-01-18', '18:36:53', 38.997, -0.166342, 1, 3),
+(1809, 4170, '2022-01-18', '18:36:57', 38.997, -0.166342, 1, 3),
+(1810, 4072, '2022-01-18', '18:37:01', 38.997, -0.166342, 1, 3),
+(1811, 3965, '2022-01-18', '18:38:14', 38.997, -0.166342, 1, 3),
+(1812, 3796, '2022-01-18', '18:38:19', 38.997, -0.166342, 1, 3),
+(1813, 3789, '2022-01-18', '18:38:22', 38.997, -0.166342, 1, 3),
+(1814, 3972, '2022-01-18', '18:38:31', 38.997, -0.166342, 1, 3),
+(1815, 3996, '2022-01-18', '18:38:35', 38.997, -0.166342, 1, 3),
+(1816, 3865, '2022-01-18', '18:38:39', 38.997, -0.166342, 1, 3),
+(1817, 3850, '2022-01-18', '18:38:43', 38.997, -0.166342, 1, 3),
+(1818, 3993, '2022-01-18', '18:38:52', 38.997, -0.166342, 1, 3),
+(1819, 3841, '2022-01-18', '18:38:56', 38.997, -0.166342, 1, 3),
+(1820, 3937, '2022-01-18', '18:39:00', 38.997, -0.166342, 1, 3),
+(1821, 3618, '2022-01-18', '18:45:01', 38.997, -0.166342, 1, 3),
+(1822, 3726, '2022-01-18', '18:45:05', 38.997, -0.166342, 1, 3),
+(1823, 3539, '2022-01-18', '18:46:14', 38.997, -0.166342, 1, 3),
+(1824, 3639, '2022-01-18', '18:46:18', 38.997, -0.166342, 1, 3),
+(1825, 3618, '2022-01-18', '18:46:22', 38.997, -0.166342, 1, 3),
+(1826, 3650, '2022-01-18', '18:46:26', 38.997, -0.166342, 1, 3),
+(1827, 3557, '2022-01-18', '18:46:34', 38.997, -0.166342, 1, 3),
+(1828, 3550, '2022-01-18', '18:46:38', 38.997, -0.166342, 1, 3);
 
 -- --------------------------------------------------------
 
@@ -107,6 +138,29 @@ CREATE TABLE `notificacion` (
   `hora` time NOT NULL,
   `id_tipoNotificacion` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `registros_estado_nodo`
+--
+
+CREATE TABLE `registros_estado_nodo` (
+  `id` int(11) NOT NULL,
+  `id_sensor` int(11) NOT NULL,
+  `fecha` date NOT NULL,
+  `estado` varchar(20) NOT NULL,
+  `hora` time NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Volcado de datos para la tabla `registros_estado_nodo`
+--
+
+INSERT INTO `registros_estado_nodo` (`id`, `id_sensor`, `fecha`, `estado`, `hora`) VALUES
+(8, 1, '2022-01-18', 'Conectado', '18:44:55'),
+(9, 1, '2022-01-18', 'Desconectado', '18:44:55'),
+(10, 1, '2022-01-18', 'Conectado', '18:44:55');
 
 -- --------------------------------------------------------
 
@@ -220,6 +274,12 @@ ALTER TABLE `notificacion`
   ADD KEY `id_tipoNotificacion` (`id_tipoNotificacion`);
 
 --
+-- Indices de la tabla `registros_estado_nodo`
+--
+ALTER TABLE `registros_estado_nodo`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indices de la tabla `sensor`
 --
 ALTER TABLE `sensor`
@@ -258,13 +318,19 @@ ALTER TABLE `info_privada`
 -- AUTO_INCREMENT de la tabla `mediciones`
 --
 ALTER TABLE `mediciones`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1798;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1829;
 
 --
 -- AUTO_INCREMENT de la tabla `notificacion`
 --
 ALTER TABLE `notificacion`
   MODIFY `id_notificacion` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT de la tabla `registros_estado_nodo`
+--
+ALTER TABLE `registros_estado_nodo`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT de la tabla `sensor`
